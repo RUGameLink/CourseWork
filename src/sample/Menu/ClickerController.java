@@ -63,12 +63,8 @@ public class ClickerController implements Initializable {
 
     private Timeline timeline;
 
-//    private FileStreamer fileStreamer = new FileStreamer();
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-    //    perSecond = 0;
-    //    timerOn = false;
         userEffect = 1;
 
         try {
@@ -177,9 +173,6 @@ public class ClickerController implements Initializable {
         if (timerOn == false){
             timerOn = true;
         }
-    //    else if (timerOn == true){
-    //        timeline.stop();
-    //    }
 
 
         double speed = 1 / perSecond * 1000;
@@ -264,45 +257,4 @@ public class ClickerController implements Initializable {
             break;
         }
     }
-
-/*    public void Output() throws IOException {
-
-        String res;
-        res = clickerCount + " " + bustEffect + " " + bustNumber + " " + bustPrice + " "
-                  + passivBustNumber + " " + passivBustPrice + " " + perSecond;
-        fileStreamer.OutputStream(res);
-    }
-
-    public void Input() throws IOException {
-
-         String temp = fileStreamer.InputStream();
-
-         if (temp.length() == 0){
-             passivBustPrice = 10;
-             passivBustNumber = 0;
-
-             bustPrice = 25;
-             bustNumber = 0;
-             bustEffect = 0;
-             clickerCount = 0;
-             perSecond = 0;
-         }
-         else {
-             String[] words = split(temp);
-             clickerCount = Integer.parseInt(words[0]);
-             bustEffect = Integer.parseInt(words[1]);
-             bustNumber = Integer.parseInt(words[2]);
-             bustPrice = Integer.parseInt(words[3]);
-             passivBustNumber = Integer.parseInt(words[4]);
-             passivBustPrice = Integer.parseInt(words[5]);
-             perSecond = Double.parseDouble(words[6]);
-
-
-         }
-    }
-    private String[] split(String temp){
-
-        String[] words = temp.split(" ");
-        return words;
-    }*/
 }

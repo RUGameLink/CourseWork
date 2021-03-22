@@ -16,9 +16,6 @@ public class Bridge {
         String url = "jdbc:sqlserver://RUGAMELINK\\SQLEXPRESS;databaseName=items";
         String username = "sa";
         String password = "123";
-    //    String url = "jdbc:sqlserver://computer;databaseName=player";
-    //    String username = "sa";
-    //    String password = "123";
 
         try {
             connection = DriverManager.getConnection(url, username, password);
@@ -100,7 +97,6 @@ public class Bridge {
         String sql = "insert boxTable values('"+heroes.getName()+"', " + heroes.getRarity() + ", "
                 + "'" +heroes.getDam() + "', " + "'" +heroes.getHeal() + "', "
                 + "'" +heroes.getElement() + "', " + "'" +heroes.getSkill() + "'" + ")";
-    //    String sql = "insert play values('"+heroes.getName()+"', " + heroes.getRarity()+", '" + 3 + "')";
         System.out.println(sql);
         try {
             Statement statement = connection.createStatement();
@@ -184,7 +180,6 @@ public class Bridge {
                         heroesData.add(new FireHeroes(rarity, damageBust, healing, name, element, skill));
                         break;
                 }
-
             }
         } catch (Exception throwables) {
             throwables.printStackTrace();

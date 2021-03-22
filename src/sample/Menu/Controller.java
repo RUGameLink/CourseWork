@@ -22,7 +22,6 @@ import sample.Items.Heroes;
 
 
 public class Controller implements Initializable {
-    //private ArrayList<Heroes> heroesList = new ArrayList<Heroes>();
     private ObservableList<Heroes> heroesData = FXCollections.observableArrayList();
 
     Image image = new Image("/sample/Assets/null.png");
@@ -164,7 +163,6 @@ public class Controller implements Initializable {
             System.out.println(heroes);
             HeroesVis(heroes);
 
-            //this.heroesList.remove(0);
             this.heroesData.remove(0);
             Bridge.cleanerOne();
 

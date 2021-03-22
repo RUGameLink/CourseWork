@@ -69,7 +69,6 @@ public class TableController {
     @FXML
     private void initialize() {
         heroesData = Bridge.getHeroesDataList();
-    //    heroesList = Bridge.getHeroesArrayList();
 
         ShowInfo();
         name.setCellValueFactory(new PropertyValueFactory<Heroes, Heroes.Names>("name"));
@@ -115,8 +114,6 @@ public class TableController {
 
 
     private void Ref(){
-        //this.heroesData.clear();
-        //this.heroesList.clear();
         Bridge.cleaner();
         for(var i=0;i<15;++i)
         {
@@ -124,25 +121,14 @@ public class TableController {
             {
                 case 0:
                     WaterHeroes whero = WaterHeroes.Generate();
-                //    this.heroesList.add(whero);
-                //    heroesData.add(whero);
-
-                    //Bridge.setHeroesArrayList(whero);
                     Bridge.setHeroesDataList(whero);
                     break;
                 case 1:
                     FireHeroes fhero = FireHeroes.Generate();
-                //    this.heroesList.add(fhero);
-                //    heroesData.add(new FireHeroes(fhero.getRarity(),
-                //            fhero.getDam(), fhero.getHeal(), fhero.getName(), fhero.getElement(), fhero.getSkill()));
-                    //Bridge.setHeroesArrayList(fhero);
                     Bridge.setHeroesDataList(fhero);
                     break;
                 case 2:
                     Knights khero = Knights.Generate();
-                //    this.heroesList.add(khero);
-                //    heroesData.add(khero);
-                    //Bridge.setHeroesArrayList(khero);
                     Bridge.setHeroesDataList(khero);
 
                     break;
@@ -150,7 +136,6 @@ public class TableController {
         }
 
         heroesData = Bridge.getHeroesDataList();
-    //    heroesList = Bridge.getHeroesArrayList();
         table.setItems(heroesData);
         ShowInfo();
     }

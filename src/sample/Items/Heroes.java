@@ -23,25 +23,6 @@ public class Heroes {
         Names(String name) {
             this.name = name;
         }
-    /*    public Enum getName(String temp){
-            switch (temp) {
-                case 0:
-                    temp = "Купол";
-                    break;
-                case 1:
-                    temp = "Отражение";
-                    break;
-                case 2:
-                    temp = "Разящий удар";
-                    break;
-                case 3:
-                    temp = "Парирование";
-                    break;
-                case 4:
-                    temp = "Отсутствует";
-                    break;
-            }
-        }*/
 
 
         @Override
