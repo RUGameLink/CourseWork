@@ -313,6 +313,5 @@ public class Controller implements Initializable {
         }
         skill.setImage(image);
     }
-
 }
 
