@@ -1,4 +1,4 @@
-package sample.Bridges;
+package sample.Logic;
 
 import sample.FileStreamer.FileStreamer;
 

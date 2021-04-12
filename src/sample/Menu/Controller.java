@@ -16,8 +16,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import sample.Bridges.Bridge;
-import sample.Bridges.ClickerBridge;
+import sample.Logic.Bridge;
+import sample.Logic.ClickerBridge;
 import sample.Items.Heroes;
 
 

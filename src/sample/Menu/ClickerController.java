@@ -1,20 +1,22 @@
 package sample.Menu;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
+
 import javafx.fxml.FXML;
+
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-import sample.Bridges.ClickerBridge;
-
+import sample.FileStreamer.FileStreamer;
+import sample.Logic.Clicker;
+import sample.Logic.ClickerBridge;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
@@ -24,79 +26,87 @@ import java.util.ResourceBundle;
 
 public class ClickerController implements Initializable {
 
+    @FXML
+    private Button tableWindow;
 
     @FXML
-    private Label passiveBustCount;
+    private Button shopWindow;
 
     @FXML
-    private Label moneyCount;
+    private Label buttonsInfo;
 
     @FXML
-    private Button workBtn;
+    private Button upBtn;
 
     @FXML
-    private Button bustBtn;
+    private Label infoLabel;
 
     @FXML
-    private Button passivBustBtn;
-
-    public static int clickerCount;
+    private Button upgBtn;
 
     @FXML
-    private Button retBtn;
+    private ImageView stone;
 
     @FXML
-    private TextArea infoPanel;
+    private Label progLabel;
 
-    private int timerSpeed;
-    private double perSecond;
-    private boolean timerOn;
+    @FXML
+    private Label totalOre;
 
-    private int passivBustPrice;
-    private int passivBustNumber;
+    @FXML
+    private Button oreBtn;
 
-    private int bustPrice;
-    private int bustNumber;
-    private int bustEffect;
-    private int userEffect;
+    @FXML
+    private ProgressBar progressBar;
 
-    private Timeline timeline;
+    Clicker clicker;
+
+    Image image = new Image("/sample/Assets/null.png");
+
+    private Random r = new Random();
+
+    private int oreCHeck;
+    private int temp;
+    private int progress = 0;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        userEffect = 1;
 
-        try {
-            ClickerBridge.Input();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        clicker = new Clicker(0, 10, 0, 0, 20, 0, 100,
+                0, 1, 6);
 
-        clickerCount = Controller.getMoney();
+        read();
 
-        passivBustPrice = ClickerBridge.getBustPrice();
-        passivBustNumber = ClickerBridge.getPassivBustNumber();
+        upBtn.setText("Заточить кирку (" + clicker.getBustNumber() + ")");
+        upgBtn.setText("Улучшить кирку (" + clicker.getPassivBustNumber() + ")");
+        infoLabel.setText("Количество монет: " + clicker.getClickerCount() + ")");
+        totalOre.setText("Разбито руды: " +  clicker.getOreCount() + ")");
+        progLabel.setText("Залежа добыта на:  " + temp + "%");
 
-        bustPrice = ClickerBridge.getBustPrice();
-        bustNumber = ClickerBridge.getBustNumber();
-        bustEffect = ClickerBridge.getBustEffect();
-        perSecond = ClickerBridge.getPerSecond();
-        passivBustPrice = ClickerBridge.getPassivBustPrice();
-        timerOn = ClickerBridge.getTimerOne();
-
-        moneyCount.setText("Количество монет: " + clickerCount);
-        bustBtn.setText("Усилить (" + bustNumber + ")");
-        passivBustBtn.setText("Пассивный доход (" + passivBustNumber + ")");
-        passivBustBtn.setText("Пассивный доход (" + passivBustNumber + ")");
-
-        String s = String.format("%.1f", perSecond);
-        passiveBustCount.setText("В секунду " + s);
-
-
-        retBtn.setOnAction((event -> {
-            Stage stage = (Stage) retBtn.getScene().getWindow();
+        tableWindow.setOnAction((event -> {
+            Stage stage = (Stage) tableWindow.getScene().getWindow();
             stage.close();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/sample/fxms/table.fxml"));
 
+            try {
+                loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Parent root = loader.getRoot();
+            stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("TableMenu");
+            stage.setResizable(false);
+            stage.show();
+
+        }));
+
+        shopWindow.setOnAction((event -> {
+            Stage stage = (Stage) tableWindow.getScene().getWindow();
+            stage.close();
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/sample/fxms/sample.fxml"));
 
@@ -108,149 +118,174 @@ public class ClickerController implements Initializable {
 
             Parent root = loader.getRoot();
             stage = new Stage();
-            stage.setTitle("Lototron");
-            stage.setResizable(false);
             stage.setScene(new Scene(root));
+            stage.setTitle("TableMenu");
+            stage.setResizable(false);
             stage.show();
+
         }));
 
-        passivBustBtn.setOnMouseEntered(event -> {
-            infoPanel.setVisible(true);
-            infoPanel.setText("Уровень: " + passivBustNumber
-                    + "\n" + "Стоимость улучшения: " + passivBustPrice);
-        } );
+        oreBtn.setOnAction(actionEvent -> {
+            clickOre();
+            write();
+            temp =  (100 * progress) / (int) clicker.getHpCount();
+            progLabel.setText("Залежа добыта на:  " + temp + "%");
+        });
 
-        passivBustBtn.setOnMouseExited(event -> {
-            infoPanel.setVisible(false);
-            infoPanel.setText("");
-        } );
-
-        bustBtn.setOnMouseEntered(event -> {
-            infoPanel.setVisible(true);
-            infoPanel.setText("Уровень: " + bustNumber
-                    + "\n" + "Стоимость улучшения: " + bustPrice
-                    + "\n" + "Эффкт буста: " + bustEffect);
-        } );
-
-        bustBtn.setOnMouseExited(event -> {
-            infoPanel.setVisible(false);
-            infoPanel.setText("");
-        } );
-
-        workBtn.setOnMouseEntered(event -> {
-            infoPanel.setVisible(true);
-            int effect = userEffect + bustEffect;
-            infoPanel.setText("Добыча за клик: " + effect);
-        } );
-
-        workBtn.setOnMouseExited(event -> {
-            infoPanel.setVisible(false);
-            infoPanel.setText("");
-        } );
-
-        timerUpdate();
     }
 
+    private void clickOre(){
+        progress = progress + 1 + clicker.getBustEffect();
+        postProgress(progress);
+        if(progress >= clicker.getHpCount()){
+            scale();
+            int temp = clicker.getOreCount() + 1;
+            clicker.setOreCount(temp);
+            progress = 0;
+            temp = clicker.getOreCount();
+            clicker.setClickerCount(temp);
+            totalOre.setText("Разбито руды: " +  clicker.getOreCount() + ")");
+            infoLabel.setText("Количество монет: " + clicker.getClickerCount() + ")");
+            changeOre();
+        }
+    }
 
-    private void onTimerTick(ActionEvent actionEvent){
-        clickerCount ++;
-        moneyCount.setText("Количество монет: " + clickerCount);
+    private void changeOre(){
+        oreCHeck = r.nextInt(4 - 1 + 1) + 1;
+        switch(oreCHeck)
+        {
+            case 1:
+                image = new Image("/sample/Assets/ore/ore1.png");
+                break;
+            case 2:
+                image = new Image("/sample/Assets/ore/ore2.png");
+                break;
+            case 3:
+                image = new Image("/sample/Assets/ore/ore3.png");
+                break;
+            case 4:
+                image = new Image("/sample/Assets/ore/ore4.png");
+                break;
+        }
+        stone.setImage(image);
+        write();
+    }
 
-        ClickerBridge.setClickerCount(clickerCount);
+    private void scale(){
+        int temp;
+        if (clicker.getBustEffect() > 20000){
+            temp = (int) clicker.getHpCount() + 50000;
+            clicker.setHpCount(temp);
+        }
+        else if (clicker.getBustEffect() > 15000){
+            temp = (int) clicker.getHpCount() + 18000;
+            clicker.setHpCount(temp);
+        }
+        else if (clicker.getBustEffect() > 10000){
+            temp = (int) clicker.getHpCount() + 12000;
+            clicker.setHpCount(temp);
+        }
+        else if (clicker.getBustEffect() > 3000){
+            temp = (int) clicker.getHpCount() + 5000;
+            clicker.setHpCount(temp);
+        }
+        else if (clicker.getBustEffect() > 1000){
+            temp = (int) clicker.getHpCount() + 2000;
+            clicker.setHpCount(temp);
+        }
+        else if (clicker.getBustEffect() > 400){
+            temp = (int) clicker.getHpCount() + 600;
+            clicker.setHpCount(temp);
+        }
+        else if (clicker.getBustEffect() > 300){
+            temp = (int) clicker.getHpCount() + 400;
+            clicker.setHpCount(temp);
+        }
+        else if (clicker.getBustEffect() > 200){
+            temp = (int) clicker.getHpCount() + 300;
+            clicker.setHpCount(temp);
+        }
+        else if (clicker.getBustEffect() > 100){
+            temp = (int) clicker.getHpCount() + 200;
+            clicker.setHpCount(temp);
+        }
+        else if (clicker.getBustEffect() > 70){
+            temp = (int) clicker.getHpCount() + 80;
+            clicker.setHpCount(temp);
+        }
+        else if (clicker.getBustEffect() > 50){
+            temp = (int) clicker.getHpCount() + 60;
+            clicker.setHpCount(temp);
+        }
+        else if (clicker.getBustEffect() > 20){
+            temp = (int) clicker.getHpCount() + 30;
+            clicker.setHpCount(temp);
+        }
+        else if (clicker.getBustEffect() > 10){
+            temp = (int) clicker.getHpCount() + 20;
+            clicker.setHpCount(temp);
+        }
+    }
+
+    private void postProgress(int progress) {
+
+        progressBar.setProgress(progress);
+        progressBar.setMaxWidth(clicker.getHpCount());
+
+        if (progress == 0) {
+            progressBar.setProgress(0);
+        } else {
+            progressBar.setProgress(progress + 5);
+        }
+    }
+
+    private void write(){
+        String myText = clicker.getBustEffect() + " " + clicker.getBustPrice() + " " + clicker.getBustNumber() + " "
+                + clicker.getPassivBustPrice() + " " + clicker.getPassivBustNumber() + " " + clicker.getClickerCount() + " " + clicker.getHpCount() + " " + clicker.getOreCount()
+                + " " + clicker.getMin() + " " + clicker.getMax() + " " + oreCHeck + " " + temp + " " + progress;
         try {
-            ClickerBridge.Output();
+            FileStreamer.OutputStream(myText);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void timerUpdate(){
+    private void read(){
+        String res = "";
 
-        if (timerOn == false){
-            timerOn = true;
+        try {
+            res = FileStreamer.InputStream();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
+        if(res == null){
+            clicker = new Clicker(0, 10, 0, 0, 20, 0, 100, 0, 1, 6);
+            write();
+        }
+        else {
+            String word[] = split(res);
+            clicker.setBustEffect(Integer.parseInt(word[0]));
+            clicker.setBustPrice(Integer.parseInt(word[1]));
+            clicker.setBustNumber(Integer.parseInt(word[2]));
 
-        double speed = 1 / perSecond * 1000;
-        timerSpeed = (int)Math.round(speed);
-
-        timeline = new Timeline(new KeyFrame(
-                Duration.millis(timerSpeed), this::onTimerTick));
-
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
-
-        String s = String.format("%.1f", perSecond);
-        passiveBustCount.setText("В секунду " + s);
-
-        ClickerBridge.setTimerOn(timerOn);
-    }
-
-    public void actionPerfomed(ActionEvent actionEvent) throws IOException {
-        Random random = new Random();
-        var btn = (Button)actionEvent.getTarget();
-        switch (btn.getId()){
-            case "workBtn":{
-                clickerCount = clickerCount + userEffect + bustEffect;
-                moneyCount.setText("Количество монет: " + clickerCount);
-
-                ClickerBridge.setClickerCount(clickerCount);
-                ClickerBridge.Output();
-            }
-            break;
-            case "bustBtn":{
-                if (clickerCount >= bustPrice) {
-                    clickerCount = clickerCount - bustPrice;
-                    bustPrice += bustPrice * 0.5;
-                        if(bustEffect == 0){
-                        bustEffect ++;
-                    }
-                    else {
-                        bustEffect += bustEffect + (int) (Math.random() * +3) + 1;
-                    }
-                    bustNumber ++;
-
-                    bustBtn.setText("Усилить (" + bustNumber + ")");
-                    moneyCount.setText("Количество монет: " + clickerCount);
-
-                    infoPanel.setText("Уровень: " + bustNumber
-                            + "\n" + "Стоимость улучшения: " + bustPrice
-                            + "\n" + "Эффкт буста: " + bustEffect);
-
-                    ClickerBridge.setBustNumber(bustNumber);
-                    ClickerBridge.setClickerCount(clickerCount);
-                    ClickerBridge.setBustPrice(bustPrice);
-                    ClickerBridge.setBustEffect(bustEffect);
-
-                    ClickerBridge.Output();
-                }
-            }
-            break;
-            case "passivBustBtn":{
-
-                if (clickerCount >= passivBustPrice) {
-                    clickerCount = clickerCount - passivBustPrice;
-                    passivBustPrice += passivBustPrice * 0.5;
-                    passivBustNumber ++;
-
-                    passivBustBtn.setText("Пассивный доход (" + passivBustNumber + ")");
-                    moneyCount.setText("Количество монет: " + clickerCount);
-                    perSecond  += 0.1;
-
-                    infoPanel.setText("Уровень: " + passivBustNumber
-                            + "\n" + "Стоимость улучшения: " + passivBustPrice);
-
-                    timerUpdate();
-
-                    ClickerBridge.setPassivBustNumber(passivBustNumber);
-                    ClickerBridge.setClickerCount(clickerCount);
-                    ClickerBridge.setPassivBustPrice(passivBustPrice);
-                    ClickerBridge.setPerSecond(perSecond);
-
-                    ClickerBridge.Output();
-                }
-            }
-            break;
+            clicker.setPassivBustPrice(Integer.parseInt(word[3]));
+            clicker.setPassivBustNumber(Integer.parseInt(word[4]));
+            clicker.setClickerCount(Integer.parseInt(word[5]));
+            clicker.setHpCount(Double.parseDouble(word[6]));
+            clicker.setOreCount(Integer.parseInt(word[7]));
+            clicker.setMin(Integer.parseInt(word[8]));
+            clicker.setMax(Integer.parseInt(word[9]));
+            oreCHeck = Integer.parseInt(word[10]);
+            temp = Integer.parseInt(word[11]);
+            progress = Integer.parseInt(word[12]);
         }
     }
+
+    private static String[] split(String temp){
+
+        String[] words = temp.split(" ");
+        return words;
+    }
+
 }

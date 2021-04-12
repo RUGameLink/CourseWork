@@ -1,4 +1,4 @@
-package sample.Bridges;
+package sample.Logic;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
