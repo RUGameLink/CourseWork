@@ -94,7 +94,7 @@ public class Controller implements Initializable {
         });
 
         workWindow.setOnAction(event -> {
-            Stage stage = (Stage) tableWindow.getScene().getWindow();
+            Stage stage = (Stage) workWindow.getScene().getWindow();
             stage.close();
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/sample/fxms/clicker.fxml"));
@@ -175,6 +175,13 @@ public class Controller implements Initializable {
             ClickerBridge.Output();
         }
         else {
+            image = new Image("/sample/Assets/null.png");
+            RarityImage.setImage(image);
+            bgImg.setImage(image);
+            healImage.setImage(image);
+            damageImage.setImage(image);
+            characterImage.setImage(image);
+            skill.setImage(image);
             textField.setText("Нет денег:(");
         }
     }

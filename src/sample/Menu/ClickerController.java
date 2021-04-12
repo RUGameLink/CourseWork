@@ -14,7 +14,6 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import sample.Bridges.ClickerBridge;
-import sample.FileStreamer.FileStreamer;
 
 import java.io.IOException;
 import java.net.URL;
@@ -152,9 +151,6 @@ public class ClickerController implements Initializable {
         timerUpdate();
     }
 
-    public static int getMoney(){
-        return clickerCount;
-    }
 
     private void onTimerTick(ActionEvent actionEvent){
         clickerCount ++;
@@ -239,7 +235,7 @@ public class ClickerController implements Initializable {
 
                     passivBustBtn.setText("Пассивный доход (" + passivBustNumber + ")");
                     moneyCount.setText("Количество монет: " + clickerCount);
-                    perSecond = perSecond + 0.1;
+                    perSecond  += 0.1;
 
                     infoPanel.setText("Уровень: " + passivBustNumber
                             + "\n" + "Стоимость улучшения: " + passivBustPrice);

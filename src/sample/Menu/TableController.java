@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import sample.Bridges.Bridge;
 import sample.Items.FireHeroes;
@@ -17,11 +18,11 @@ import sample.Items.WaterHeroes;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
+
 import java.util.ResourceBundle;
 
 public class TableController {
-    private ArrayList<Heroes> heroesList = new ArrayList<Heroes>();
+
     private ObservableList<Heroes> heroesData = FXCollections.observableArrayList();
 
     @FXML
@@ -60,15 +61,21 @@ public class TableController {
     @FXML
     private TableColumn<Heroes, String> skill;
 
+
+    @FXML
+    private Button tableWindow;
+
+    @FXML
+    private Button workWindow;
+
     @FXML
     private Button refBtn;
 
-    @FXML
-    private Button sortBtn;
 
     @FXML
     private void initialize() {
         heroesData = Bridge.getHeroesDataList();
+        System.out.println(heroesData);
 
         ShowInfo();
         name.setCellValueFactory(new PropertyValueFactory<Heroes, Heroes.Names>("name"));
@@ -85,10 +92,25 @@ public class TableController {
             Ref();
         }));
 
-        sortBtn.setOnAction((event -> {
-            heroesData = Bridge.sort();
-            table.setItems(heroesData);
-        }));
+        workWindow.setOnAction(event -> {
+            Stage stage = (Stage) workWindow.getScene().getWindow();
+            stage.close();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/sample/fxms/clicker.fxml"));
+
+            try {
+                loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Parent root = loader.getRoot();
+            stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("ClickerMenu");
+            stage.setResizable(false);
+            stage.show();
+        });
 
         retBtn.setOnAction((event -> {
             Stage stage = (Stage) retBtn.getScene().getWindow();

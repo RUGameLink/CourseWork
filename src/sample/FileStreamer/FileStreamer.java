@@ -1,9 +1,11 @@
 package sample.FileStreamer;
 
+import com.sun.webkit.SharedBuffer;
+
 import java.io.*;
 
 public class FileStreamer {
-
+    
     public static void OutputStream(String greetings) throws IOException {
 
 

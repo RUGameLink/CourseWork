@@ -107,7 +107,7 @@ public class ClickerBridge {
                 passivBustPrice = 10;
                 perSecond = 0;
                 boxPrice = 250;
-                timerOn = false;
+                timerOn = true;
 
                 Output();
             }
