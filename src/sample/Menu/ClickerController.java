@@ -32,8 +32,6 @@ public class ClickerController implements Initializable {
     @FXML
     private Button shopWindow;
 
-    @FXML
-    private Label buttonsInfo;
 
     @FXML
     private Button upBtn;
@@ -56,8 +54,6 @@ public class ClickerController implements Initializable {
     @FXML
     private Button oreBtn;
 
-    @FXML
-    private ProgressBar progressBar;
 
     Clicker clicker;
 
@@ -76,11 +72,14 @@ public class ClickerController implements Initializable {
                 0, 1, 6);
 
         read();
+        readOre();
+
+        temp ++;
 
         upBtn.setText("Заточить кирку (" + clicker.getBustNumber() + ")");
         upgBtn.setText("Улучшить кирку (" + clicker.getPassivBustNumber() + ")");
-        infoLabel.setText("Количество монет: " + clicker.getClickerCount() + ")");
-        totalOre.setText("Разбито руды: " +  clicker.getOreCount() + ")");
+        infoLabel.setText("Количество монет: " + clicker.getClickerCount());
+        totalOre.setText("Разбито руды: " +  clicker.getOreCount());
         progLabel.setText("Залежа добыта на:  " + temp + "%");
 
         tableWindow.setOnAction((event -> {
@@ -136,16 +135,15 @@ public class ClickerController implements Initializable {
 
     private void clickOre(){
         progress = progress + 1 + clicker.getBustEffect();
-        postProgress(progress);
         if(progress >= clicker.getHpCount()){
             scale();
             int temp = clicker.getOreCount() + 1;
             clicker.setOreCount(temp);
             progress = 0;
-            temp = clicker.getOreCount();
+            temp = clicker.getPower();
             clicker.setClickerCount(temp);
-            totalOre.setText("Разбито руды: " +  clicker.getOreCount() + ")");
-            infoLabel.setText("Количество монет: " + clicker.getClickerCount() + ")");
+            totalOre.setText("Разбито руды: " +  clicker.getOreCount());
+            infoLabel.setText("Количество монет: " + clicker.getClickerCount());
             changeOre();
         }
     }
@@ -169,6 +167,25 @@ public class ClickerController implements Initializable {
         }
         stone.setImage(image);
         write();
+    }
+
+    private void readOre(){
+        switch(oreCHeck)
+        {
+            case 1:
+                image = new Image("/sample/Assets/ore/ore1.png");
+                break;
+            case 2:
+                image = new Image("/sample/Assets/ore/ore2.png");
+                break;
+            case 3:
+                image = new Image("/sample/Assets/ore/ore3.png");
+                break;
+            case 4:
+                image = new Image("/sample/Assets/ore/ore4.png");
+                break;
+        }
+        stone.setImage(image);
     }
 
     private void scale(){
@@ -227,17 +244,6 @@ public class ClickerController implements Initializable {
         }
     }
 
-    private void postProgress(int progress) {
-
-        progressBar.setProgress(progress);
-        progressBar.setMaxWidth(clicker.getHpCount());
-
-        if (progress == 0) {
-            progressBar.setProgress(0);
-        } else {
-            progressBar.setProgress(progress + 5);
-        }
-    }
 
     private void write(){
         String myText = clicker.getBustEffect() + " " + clicker.getBustPrice() + " " + clicker.getBustNumber() + " "
