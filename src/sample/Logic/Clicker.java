@@ -3,40 +3,40 @@ package sample.Logic;
 import java.util.Random;
 
 public class Clicker {
-    private int passivBustPrice;
-    private int passivBustNumber;
+    private static int passivBustPrice;
+    private static int passivBustNumber;
 
 
-    private int bustPrice;
-    private int bustNumber;
-    private int bustEffect;
-    private int oreCount;
-    private int min;
-    private int max;
+    private static int bustPrice;
+    private static int bustNumber;
+    private static int bustEffect;
+    private static int oreCount;
+    private static int min;
+    private static int max;
 
 
-    private Random r = new Random();
-    private int clickerCount;
+    private static Random r = new Random();
+    private static int clickerCount;
 
-    private double hpCount;
+    private static double hpCount;
 
-    public Clicker(int bustEffect, int bustPrice, int bustNumber, int passivBustNumber, int passivBustPrice, int count, double hpCount, int murCount, int min, int max){
-        this.bustPrice = bustPrice;
-        this.bustEffect = bustEffect;
-        this.bustNumber = bustNumber;
+    public Clicker(int busteffect, int bustprice, int bustnumber, int passivbustNumber, int passivbustPrice, int count, double hpcount, int murCount, int Min, int Max){
+        bustPrice = bustprice;
+        bustEffect = busteffect;
+        bustNumber = bustnumber;
 
-        this.passivBustPrice = passivBustPrice;
+        passivBustPrice = passivbustPrice;
 
-        this.passivBustNumber = passivBustNumber;
+        passivBustNumber = passivbustNumber;
 
-        this.clickerCount = count;
-        this.hpCount = hpCount;
-        this.oreCount = murCount;
-        this.min = min;
-        this.max = max;
+        clickerCount = count;
+        hpCount = hpcount;
+        oreCount = murCount;
+        min = Min;
+        max = Max;
     }
 
-    public boolean actBuster(){
+    public static boolean actBuster(){
         if (clickerCount >= bustPrice) {
             clickerCount = clickerCount - bustPrice;
             bustPrice += bustPrice * 0.3;
@@ -54,7 +54,7 @@ public class Clicker {
         }
     }
 
-    public boolean passBuster(){
+    public static boolean passBuster(){
         if (clickerCount >= passivBustPrice) {
             clickerCount = clickerCount - passivBustPrice;
             passivBustPrice += passivBustPrice * 0.5;
@@ -68,63 +68,63 @@ public class Clicker {
         }
     }
 
-    public int getBustEffect(){
+    public static int getBustEffect(){
         return bustEffect;
     }
 
-    public void setClickerCount(int clickerCount){
-        this.clickerCount = clickerCount;
+    public static void setClickerCount(int clickercount){
+        clickerCount = clickercount;
     }
 
-    public int getClickerCount(){
+    public static int getClickerCount(){
         return clickerCount;
     }
 
-    public int getBustNumber(){
+    public static int getBustNumber(){
         return bustNumber;
     }
 
-    public int getBustPrice(){
+    public static int getBustPrice(){
         return bustPrice;
     }
 
-    public void setBustEffect(int bustEffect){this.bustEffect = bustEffect;}
+    public static void setBustEffect(int busteffect){bustEffect = busteffect;}
 
-    public void setBustPrice(int bustPrice){this.bustPrice = bustPrice;}
+    public static void setBustPrice(int bustprice){bustPrice = bustprice;}
 
-    public void setBustNumber(int bustNumber){this.bustNumber = bustNumber;}
+    public static void setBustNumber(int bustnumber){bustNumber = bustnumber;}
 
-    public int getPassivBustPrice(){return this.passivBustPrice;}
+    public static int getPassivBustPrice(){return passivBustPrice;}
 
-    public int getPassivBustNumber() {
-        return this.passivBustNumber;
+    public static int getPassivBustNumber() {
+        return passivBustNumber;
     }
 
-    public void setPassivBustPrice(int PassivBustPrice){this.passivBustPrice = PassivBustPrice;}
+    public static void setPassivBustPrice(int PassivBustPrice){passivBustPrice = PassivBustPrice;}
 
-    public void setPassivBustNumber(int PassivBustNumber){this.passivBustNumber = PassivBustNumber;}
+    public static void setPassivBustNumber(int PassivBustNumber){passivBustNumber = PassivBustNumber;}
 
-    public void  setHpCount(double hp){this.hpCount = hp;}
+    public static void  setHpCount(double hp){hpCount = hp;}
 
-    public double getHpCount(){return this.hpCount;}
+    public static double getHpCount(){return hpCount;}
 
-    public int getOreCount(){return this.oreCount;}
+    public static int getOreCount(){return oreCount;}
 
-    public void setOreCount(int temp){this.oreCount = temp;}
+    public static void setOreCount(int temp){oreCount = temp;}
 
-    public int getMin(){
-        return this.min;
+    public static int getMin(){
+        return min;
     }
 
-    public void setMax(int max){this.max = max;}
+    public static void setMax(int Max){max = Max;}
 
-    public int getMax(){
-        return this.max;
+    public static int getMax(){
+        return max;
     }
 
-    public void setMin(int min){this.min = min;}
+    public static void setMin(int Min){min = Min;}
 
-    public int getPower(){
+    public static int getPower(){
         int temp = clickerCount +  r.nextInt(max - min + 1) + min;
         return temp;
     }

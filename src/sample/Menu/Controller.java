@@ -16,8 +16,9 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import sample.FileStreamer.FileStreamer;
 import sample.Logic.Bridge;
-import sample.Logic.ClickerBridge;
+import sample.Logic.Clicker;
 import sample.Items.Heroes;
 
 
@@ -61,27 +62,23 @@ public class Controller implements Initializable {
     private Label moneyCountIn;
 
     private static int moneyCount;
-    private int boxPrice;
-
+    private int boxPrice = 500;
+    Clicker clicker;
+    ClickerController clickerController;
 
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        clickerController = new ClickerController();
         if (moneyCount == 0){
 
-            try {
-                ClickerBridge.Input();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            clickerController.read();
         }
 
 
         Bridge.Connector();
 
-        moneyCount = ClickerBridge.getClickerCount();
+        moneyCount = clicker.getClickerCount();
 
-        boxPrice = ClickerBridge.getBoxPrice();
 
         moneyCountIn.setText("Количество монет: " + moneyCount);
 
@@ -170,9 +167,7 @@ public class Controller implements Initializable {
             boxPrice = boxPrice + boxPrice;
             getBtn.setText("Взять (" + boxPrice + ")");
 
-            ClickerBridge.setBoxPrice(boxPrice);
-            ClickerBridge.setClickerCount(moneyCount);
-            ClickerBridge.Output();
+            clicker.setClickerCount(moneyCount);
         }
         else {
             image = new Image("/sample/Assets/null.png");

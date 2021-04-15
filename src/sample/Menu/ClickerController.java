@@ -10,13 +10,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import sample.FileStreamer.FileStreamer;
 import sample.Logic.Clicker;
-import sample.Logic.ClickerBridge;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
@@ -63,7 +63,7 @@ public class ClickerController implements Initializable {
 
     private int oreCHeck;
     private int temp;
-    private int progress = 0;
+    private int progress;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -86,7 +86,7 @@ public class ClickerController implements Initializable {
             Stage stage = (Stage) tableWindow.getScene().getWindow();
             stage.close();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/sample/fxms/table.fxml"));
+            loader.setLocation(getClass().getResource("/sample/fxms/sample.fxml"));
 
             try {
                 loader.load();
@@ -107,7 +107,7 @@ public class ClickerController implements Initializable {
             Stage stage = (Stage) tableWindow.getScene().getWindow();
             stage.close();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/sample/fxms/sample.fxml"));
+            loader.setLocation(getClass().getResource( "/sample/fxms/table.fxml"));
 
             try {
                 loader.load();
@@ -131,6 +131,35 @@ public class ClickerController implements Initializable {
             progLabel.setText("Залежа добыта на:  " + temp + "%");
         });
 
+        upBtn.setOnAction(actionEvent -> {
+            if(clicker.actBuster() == true){
+                write();
+                upBtn.setText("Заточить кирку (" + clicker.getBustNumber() + ")");
+                infoLabel.setText("Количество монет: " + clicker.getClickerCount());
+
+            }
+        });
+
+        Tooltip tooltip = new Tooltip();
+
+        tooltip.setText("Сила усиления: " + clicker.getBustEffect() +
+                "\n" + "Стоимость усиления: " + clicker.getBustPrice() +
+                "\n" + "Усилений куплено: " + clicker.getBustNumber());
+        upBtn.setTooltip(tooltip);
+
+        upgBtn.setOnAction(actionEvent -> {
+            if(clicker.passBuster() == true){
+                write();
+                upgBtn.setText("Улучшить кирку (" + clicker.getPassivBustNumber() + ")");
+                infoLabel.setText("Количество монет: " + clicker.getClickerCount());
+            }
+        });
+
+        Tooltip tooltip2 = new Tooltip();
+        tooltip2.setText("Минимальное число получаемых монет: " + clicker.getMin()
+                + "\nМаксимальное число получаемых монет: " + clicker.getMax() + "\nСтоимость усиления: " + clicker.getPassivBustPrice() +
+                "\n" + "Улучшений сделано: " + clicker.getPassivBustNumber());
+        upgBtn.setTooltip(tooltip2);
     }
 
     private void clickOre(){
@@ -246,8 +275,9 @@ public class ClickerController implements Initializable {
 
 
     private void write(){
+
         String myText = clicker.getBustEffect() + " " + clicker.getBustPrice() + " " + clicker.getBustNumber() + " "
-                + clicker.getPassivBustPrice() + " " + clicker.getPassivBustNumber() + " " + clicker.getClickerCount() + " " + clicker.getHpCount() + " " + clicker.getOreCount()
+                + clicker.getPassivBustNumber() + " " + clicker.getPassivBustPrice() + " " + clicker.getClickerCount() + " " + clicker.getHpCount() + " " + clicker.getOreCount()
                 + " " + clicker.getMin() + " " + clicker.getMax() + " " + oreCHeck + " " + temp + " " + progress;
         try {
             FileStreamer.OutputStream(myText);
@@ -256,7 +286,7 @@ public class ClickerController implements Initializable {
         }
     }
 
-    private void read(){
+    public void read(){
         String res = "";
 
         try {
@@ -265,18 +295,22 @@ public class ClickerController implements Initializable {
             e.printStackTrace();
         }
 
-        if(res == null){
+        if(res == ""){
             clicker = new Clicker(0, 10, 0, 0, 20, 0, 100, 0, 1, 6);
+            oreCHeck = 1;
+            progress = 0;
+            temp = 0;
             write();
         }
         else {
+            clicker = new Clicker(0, 10, 0, 0, 20, 0, 100, 0, 1, 6);
             String word[] = split(res);
             clicker.setBustEffect(Integer.parseInt(word[0]));
             clicker.setBustPrice(Integer.parseInt(word[1]));
             clicker.setBustNumber(Integer.parseInt(word[2]));
 
-            clicker.setPassivBustPrice(Integer.parseInt(word[3]));
-            clicker.setPassivBustNumber(Integer.parseInt(word[4]));
+            clicker.setPassivBustPrice(Integer.parseInt(word[4]));
+            clicker.setPassivBustNumber(Integer.parseInt(word[3]));
             clicker.setClickerCount(Integer.parseInt(word[5]));
             clicker.setHpCount(Double.parseDouble(word[6]));
             clicker.setOreCount(Integer.parseInt(word[7]));
@@ -287,7 +321,6 @@ public class ClickerController implements Initializable {
             progress = Integer.parseInt(word[12]);
         }
     }
-
     private static String[] split(String temp){
 
         String[] words = temp.split(" ");
