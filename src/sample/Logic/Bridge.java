@@ -109,6 +109,42 @@ public class Bridge {
         }
     }
 
+    public static int writeUser(String sql){
+        System.out.println(sql);
+        int rows = 0;
+        String res = "0";
+        try {
+            Statement statement = connection.createStatement();
+            rows = statement.executeUpdate(sql + res);
+
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return Integer.parseInt(res);
+    }
+
+    public static String[] checkUsers(String sql){
+        System.out.println(sql);
+        String[] res = new String[2];
+        try {
+            Statement statement = connection.createStatement();
+
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()){
+                res[0] = resultSet.getString("login");
+                res[1] = resultSet.getString("password");
+            }
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return res;
+
+    }
+
     public static void cleaner(){
         String sql = "DELETE boxTable";
         Statement statement = null;
