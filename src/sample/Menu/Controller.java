@@ -16,7 +16,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import sample.FileStreamer.FileStreamer;
 import sample.Logic.Bridge;
 import sample.Logic.Clicker;
 import sample.Items.Heroes;
@@ -138,7 +137,6 @@ public class Controller implements Initializable {
 
         if (moneyCount >= boxPrice) {
 
-            //this.heroesList = Bridge.getHeroesArrayList();
             this.heroesData = Bridge.getHeroesDataList();
 
             if (this.heroesData.size() == 0) {
@@ -155,8 +153,11 @@ public class Controller implements Initializable {
             }
 
             moneyCount -= boxPrice;
+            Clicker.setClickerCount(moneyCount);
+            clickerController.write();
             moneyCountIn.setText("Количество монет: " + moneyCount);
             var heroes = this.heroesData.get(0);
+            Bridge.buyItem(heroes);
             System.out.println(heroes);
             HeroesVis(heroes);
 
@@ -164,7 +165,6 @@ public class Controller implements Initializable {
             Bridge.cleanerOne();
 
             textField.setText(heroes.toString());
-            boxPrice = boxPrice + boxPrice;
             getBtn.setText("Взять (" + boxPrice + ")");
 
             clicker.setClickerCount(moneyCount);

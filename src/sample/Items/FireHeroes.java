@@ -14,6 +14,16 @@ public class FireHeroes extends Heroes{
 
     }
 
+    public FireHeroes(String owner, int rarity, damageAmplification damAmpl, healing heal, Names name, String element, String skill){
+        this.rarity = rarity;
+        this.damAmpl = damAmpl;
+        this.heal = heal;
+        this.name = name;
+        this.element = element;
+        this.skill = skill;
+        this.owner = owner;
+    }
+
     @Override
     public int getRarity() {
         return this.rarity;
@@ -38,6 +48,10 @@ public class FireHeroes extends Heroes{
     @Override
     public String getSkill(){
         return this.skill;
+    }
+
+    public String getOwner(){
+        return this.owner;
     }
 
     @Override

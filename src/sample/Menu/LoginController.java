@@ -75,7 +75,7 @@ public class LoginController implements Initializable {
                     stage = (Stage) loginBtn.getScene().getWindow();
                     stage.close();
                     loader = new FXMLLoader();
-                    loader.setLocation(getClass().getResource("/sample/fxms/table.fxml"));
+                    loader.setLocation(getClass().getResource("/sample/fxms/tableSA.fxml"));
 
                     try {
                         loader.load();
@@ -85,7 +85,7 @@ public class LoginController implements Initializable {
 
                     root = loader.getRoot();
                     stage = new Stage();
-                    stage.setScene(new Scene(root,848, 628));
+                    stage.setScene(new Scene(root,900, 628));
                     stage.setTitle("TableMenu");
                     stage.setResizable(false);
                     stage.show();
@@ -135,6 +135,7 @@ public class LoginController implements Initializable {
                     res = 2;
                 }
                 else {
+                    Bridge.setUserName(login);
                     res = 1;
                 }
             }

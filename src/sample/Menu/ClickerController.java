@@ -274,7 +274,7 @@ public class ClickerController implements Initializable {
     }
 
 
-    private void write(){
+    public void write(){
 
         String myText = clicker.getBustEffect() + " " + clicker.getBustPrice() + " " + clicker.getBustNumber() + " "
                 + clicker.getPassivBustNumber() + " " + clicker.getPassivBustPrice() + " " + clicker.getClickerCount() + " " + clicker.getHpCount() + " " + clicker.getOreCount()

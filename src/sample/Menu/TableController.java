@@ -67,16 +67,14 @@ public class TableController {
     @FXML
     private Button workWindow;
 
-    @FXML
-    private Button refBtn;
 
 
     @FXML
     private void initialize() {
-        heroesData = Bridge.getHeroesDataList();
+        heroesData = Bridge.getItems();
         System.out.println(heroesData);
 
-        ShowInfo();
+
         name.setCellValueFactory(new PropertyValueFactory<Heroes, Heroes.Names>("name"));
         rarity.setCellValueFactory(new PropertyValueFactory<Heroes, Integer>("rarity"));
         dam.setCellValueFactory(new PropertyValueFactory<Heroes, Heroes.damageAmplification>("dam"));
@@ -87,9 +85,6 @@ public class TableController {
 
 
 
-        refBtn.setOnAction((event -> {
-            Ref();
-        }));
 
         workWindow.setOnAction(event -> {
             Stage stage = (Stage) workWindow.getScene().getWindow();
@@ -134,57 +129,5 @@ public class TableController {
     }
 
 
-    private void Ref(){
-        Bridge.cleaner();
-        for(var i=0;i<15;++i)
-        {
-            switch(0 + (int)(Math.random() * ((2 - 0) + 1)))
-            {
-                case 0:
-                    WaterHeroes whero = WaterHeroes.Generate();
-                    Bridge.setHeroesDataList(whero);
-                    break;
-                case 1:
-                    FireHeroes fhero = FireHeroes.Generate();
-                    Bridge.setHeroesDataList(fhero);
-                    break;
-                case 2:
-                    Knights khero = Knights.Generate();
-                    Bridge.setHeroesDataList(khero);
 
-                    break;
-            }
-        }
-
-        heroesData = Bridge.getHeroesDataList();
-        table.setItems(heroesData);
-        ShowInfo();
-    }
-
-
-    private void ShowInfo() {
-        int FireHeroesCount = 0;
-        int WaterHeroesCount = 0;
-        int KnightsCount = 0;
-
-        for (var heroes : this.heroesData)
-        {
-            if (heroes instanceof WaterHeroes)
-            {
-                WaterHeroesCount += 1;
-            }
-            else if (heroes instanceof FireHeroes)
-            {
-                FireHeroesCount += 1;
-            }
-            else if (heroes instanceof Knights)
-            {
-                KnightsCount += 1;
-            }
-        }
-
-
-        infoLabel.setText("Герои огня\t\tГерои воды\t\tВоины\n"+
-                "\t" + FireHeroesCount + "\t\t\t\t" + WaterHeroesCount + "\t\t\t" + KnightsCount);
-    }
 }

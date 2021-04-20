@@ -10,6 +10,8 @@ public class Heroes {
     public healing heal;
     public String element;
 
+    public String owner;
+
     public enum Names {
 
         ABEL ("Абель"),
@@ -97,6 +99,8 @@ public class Heroes {
     public String getSkill(){
         return this.skill;
     }
+
+    public String getOwner(){return this.owner;}
 
     @Override
     public String toString() {

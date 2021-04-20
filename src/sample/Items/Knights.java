@@ -12,6 +12,16 @@ public class Knights extends Heroes{
         this.skill = skill;
     }
 
+    public Knights(String owner, int rarity, damageAmplification damageAmpl, healing heal, Names name, String element, String skill){
+        this.rarity = rarity;
+        this.damAmpl = damageAmpl;
+        this.heal = heal;
+        this.name = name;
+        this.element = element;
+        this.skill = skill;
+        this.owner = owner;
+    }
+
     @Override
     public int getRarity() {
         return this.rarity;
@@ -105,6 +115,10 @@ public class Knights extends Heroes{
         }
         String element = "Нет";
         return new Knights(rarity, damageAmpl, heal, name, element, skill);
+    }
+
+    public String getOwner(){
+        return this.owner;
     }
 
     @Override

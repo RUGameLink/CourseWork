@@ -12,6 +12,20 @@ public class WaterHeroes extends Heroes{
         this.skill = skill;
     }
 
+    public WaterHeroes(String owner, int rarity, damageAmplification damageAmpl, healing heal, Names name, String  element, String skill){
+        this.rarity = rarity;
+        this.damAmpl = damageAmpl;
+        this.heal = heal;
+        this.name = name;
+        this.element = element;
+        this.skill = skill;
+        this.owner = owner;
+    }
+
+    public String getOwner(){
+        return this.owner;
+    }
+
     @Override
     public int getRarity() {
         return this.rarity;
