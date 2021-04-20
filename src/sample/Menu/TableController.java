@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import sample.Logic.Bridge;
 import sample.Items.FireHeroes;
@@ -60,20 +61,27 @@ public class TableController {
     @FXML
     private TableColumn<Heroes, String> skill;
 
+    @FXML
+    private Pane salePane;
 
     @FXML
-    private Button tableWindow;
+    private ListView<Heroes> itemsList;
+
+    @FXML
+    private Button saleItem;
+
 
     @FXML
     private Button workWindow;
 
-
+    @FXML
+    private Button closeBtn;
 
     @FXML
     private void initialize() {
         heroesData = Bridge.getItems();
         System.out.println(heroesData);
-
+        salePane.setVisible(false);
 
         name.setCellValueFactory(new PropertyValueFactory<Heroes, Heroes.Names>("name"));
         rarity.setCellValueFactory(new PropertyValueFactory<Heroes, Integer>("rarity"));
@@ -83,8 +91,7 @@ public class TableController {
         skill.setCellValueFactory(new PropertyValueFactory<Heroes, String>("skill"));
         table.setItems(heroesData);
 
-
-
+        itemsList.setItems(heroesData);
 
         workWindow.setOnAction(event -> {
             Stage stage = (Stage) workWindow.getScene().getWindow();
@@ -126,8 +133,14 @@ public class TableController {
             stage.setScene(new Scene(root));
             stage.show();
         }));
+
+        saleItem.setOnAction(actionEvent -> {
+            salePane.setVisible(true);
+        });
+
+        closeBtn.setOnAction(actionEvent -> {
+            salePane.setVisible(false);
+        });
+
     }
-
-
-
 }
