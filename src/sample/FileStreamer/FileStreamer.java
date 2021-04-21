@@ -6,10 +6,10 @@ import java.io.*;
 
 public class FileStreamer {
     
-    public static void OutputStream(String greetings) throws IOException {
+    public static void OutputStream(String greetings, String fileName) throws IOException {
 
 
-        FileOutputStream fileOutputStream = new FileOutputStream("test.txt", false);
+        FileOutputStream fileOutputStream = new FileOutputStream(fileName, false);
 
 
         fileOutputStream.write(greetings.getBytes());
@@ -17,9 +17,9 @@ public class FileStreamer {
         fileOutputStream.close();
     }
 
-    public static String InputStream() throws IOException {
+    public static String InputStream(String fileName) throws IOException {
 
-        FileInputStream fileInputStream = new FileInputStream("test.txt");
+        FileInputStream fileInputStream = new FileInputStream(fileName);
 
         int i;
         String temp = "";

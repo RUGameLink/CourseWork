@@ -50,7 +50,7 @@
                <graphic>
                   <ImageView fitHeight="114.0" fitWidth="106.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../out/production/CourseWork/sample/Assets/menu/shop.png" />
+                        <Image url="@../Assets/menu/shop.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -68,7 +68,7 @@
                <graphic>
                   <ImageView fitHeight="114.0" fitWidth="106.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../out/production/CourseWork/sample/Assets/menu/money.png" />
+                        <Image url="@../Assets/menu/money.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -96,7 +96,7 @@
             <Font name="Georgia" size="12.0" />
          </font>
       </Label>
-      <Pane fx:id="salePane" layoutX="-6.0" layoutY="52.0" prefHeight="540.0" prefWidth="907.0" style="-fx-background-color: #2F2B43 #2F2B43;">
+      <Pane fx:id="salePane" layoutX="-6.0" layoutY="52.0" prefHeight="540.0" prefWidth="907.0" style="-fx-background-color: #2F2B43 #2F2B43;" visible="false">
          <children>
             <ListView fx:id="itemsList" layoutX="114.0" layoutY="93.0" prefHeight="356.0" prefWidth="470.0" />
             <Button fx:id="closeBtn" layoutX="847.0" layoutY="14.0" mnemonicParsing="false" opacity="0.7" prefHeight="1.0" prefWidth="9.0" style="-fx-background-color: #393153; -fx-background-radius: 30 30 30 30;" text="X" textFill="#74e3ff">

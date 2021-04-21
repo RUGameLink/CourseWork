@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import sample.FileStreamer.FileStreamer;
+import sample.Logic.Bridge;
 import sample.Logic.Clicker;
 
 import java.io.IOException;
@@ -275,24 +276,24 @@ public class ClickerController implements Initializable {
 
 
     public void write(){
-
+        String fileName = Bridge.getUserName() + ".txt";
         String myText = clicker.getBustEffect() + " " + clicker.getBustPrice() + " " + clicker.getBustNumber() + " "
                 + clicker.getPassivBustNumber() + " " + clicker.getPassivBustPrice() + " " + clicker.getClickerCount() + " " + clicker.getHpCount() + " " + clicker.getOreCount()
                 + " " + clicker.getMin() + " " + clicker.getMax() + " " + oreCHeck + " " + temp + " " + progress;
         try {
-            FileStreamer.OutputStream(myText);
+            FileStreamer.OutputStream(myText, fileName);
         } catch (IOException e) {
-            e.printStackTrace();
+
         }
     }
 
     public void read(){
         String res = "";
-
+        String fileName = Bridge.getUserName() + ".txt";
         try {
-            res = FileStreamer.InputStream();
+            res = FileStreamer.InputStream(fileName);
         } catch (IOException e) {
-            e.printStackTrace();
+
         }
 
         if(res == ""){
