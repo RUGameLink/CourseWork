@@ -15,6 +15,7 @@ import sample.Items.FireHeroes;
 import sample.Items.Heroes;
 import sample.Items.Knights;
 import sample.Items.WaterHeroes;
+import sample.Logic.Clicker;
 
 import java.io.IOException;
 import java.net.URL;
@@ -62,6 +63,9 @@ public class TableController {
     private TableColumn<Heroes, String> skill;
 
     @FXML
+    private TableColumn<Heroes, Integer> cost;
+
+    @FXML
     private Pane salePane;
 
     @FXML
@@ -78,7 +82,11 @@ public class TableController {
     private Button closeBtn;
 
     @FXML
+    private Button saleBtn;
+
+    @FXML
     private void initialize() {
+        heroesData.clear();
         heroesData = Bridge.getItems();
         System.out.println(heroesData);
         salePane.setVisible(false);
@@ -89,6 +97,7 @@ public class TableController {
         heal.setCellValueFactory(new PropertyValueFactory<Heroes, Heroes.healing>("heal"));
         element.setCellValueFactory(new PropertyValueFactory<Heroes, String>("element"));
         skill.setCellValueFactory(new PropertyValueFactory<Heroes, String>("skill"));
+        cost.setCellValueFactory(new PropertyValueFactory<Heroes, Integer>("price"));
         table.setItems(heroesData);
 
         itemsList.setItems(heroesData);
@@ -142,5 +151,24 @@ public class TableController {
             salePane.setVisible(false);
         });
 
+        saleBtn.setOnAction(actionEvent -> {
+
+            try {
+                Heroes heroes = itemsList.getSelectionModel().getSelectedItem();
+                int cost = heroes.getPrice() + Clicker.getClickerCount();
+                Clicker.setClickerCount(cost);
+                ClickerController clickerController = new ClickerController();
+                clickerController.write();
+                int selectedIdx = itemsList.getSelectionModel().getSelectedIndex();
+                itemsList.getItems().remove(selectedIdx);
+                Bridge.delItem(heroes);
+                heroesData.clear();
+                heroesData = Bridge.getItems();
+                table.setItems(heroesData);
+            }
+            catch (NullPointerException ex){
+                System.out.println(ex);
+            }
+        });
     }
 }

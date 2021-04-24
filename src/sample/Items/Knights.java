@@ -3,16 +3,17 @@ package sample.Items;
 import java.util.Random;
 
 public class Knights extends Heroes{
-    public Knights(int rarity, damageAmplification damageAmpl, healing heal, Names name, String element, String skill){
+    public Knights(int rarity, damageAmplification damageAmpl, healing heal, Names name, String element, String skill, int price){
         this.rarity = rarity;
         this.damAmpl = damageAmpl;
         this.heal = heal;
         this.name = name;
         this.element = element;
         this.skill = skill;
+        this.price = price;
     }
 
-    public Knights(String owner, int rarity, damageAmplification damageAmpl, healing heal, Names name, String element, String skill){
+    public Knights(String owner, int rarity, damageAmplification damageAmpl, healing heal, Names name, String element, String skill, int price){
         this.rarity = rarity;
         this.damAmpl = damageAmpl;
         this.heal = heal;
@@ -20,6 +21,7 @@ public class Knights extends Heroes{
         this.element = element;
         this.skill = skill;
         this.owner = owner;
+        this.price = price;
     }
 
     @Override
@@ -51,6 +53,12 @@ public class Knights extends Heroes{
     public String getElement(){
         return this.element;
     }
+
+    @Override
+    public int getPrice(){return this.price;}
+
+    @Override
+    public void setPrice(int price){this.price = price;}
 
     public static Knights Generate(){
         int rarity = 1 + (int)(Math.random() * ((5 - 1) + 1));
@@ -114,7 +122,8 @@ public class Knights extends Heroes{
                 break;
         }
         String element = "Нет";
-        return new Knights(rarity, damageAmpl, heal, name, element, skill);
+        int price = 125 + (int)(Math.random() * ((250 - 1) + 125));
+        return new Knights(rarity, damageAmpl, heal, name, element, skill, price);
     }
 
     public String getOwner(){

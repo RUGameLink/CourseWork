@@ -3,16 +3,17 @@ package sample.Items;
 import java.util.Random;
 
 public class WaterHeroes extends Heroes{
-    public WaterHeroes(int rarity, damageAmplification damageAmpl, healing heal, Names name, String  element, String skill){
+    public WaterHeroes(int rarity, damageAmplification damageAmpl, healing heal, Names name, String  element, String skill, int price){
         this.rarity = rarity;
         this.damAmpl = damageAmpl;
         this.heal = heal;
         this.name = name;
         this.element = element;
         this.skill = skill;
+        this.price = price;
     }
 
-    public WaterHeroes(String owner, int rarity, damageAmplification damageAmpl, healing heal, Names name, String  element, String skill){
+    public WaterHeroes(String owner, int rarity, damageAmplification damageAmpl, healing heal, Names name, String  element, String skill, int price){
         this.rarity = rarity;
         this.damAmpl = damageAmpl;
         this.heal = heal;
@@ -20,6 +21,7 @@ public class WaterHeroes extends Heroes{
         this.element = element;
         this.skill = skill;
         this.owner = owner;
+        this.price = price;
     }
 
     public String getOwner(){
@@ -56,6 +58,12 @@ public class WaterHeroes extends Heroes{
     public String getSkill(){
         return this.skill;
     }
+
+    @Override
+    public int getPrice(){return this.price;}
+
+    @Override
+    public void setPrice(int price){this.price = price;}
 
     public static WaterHeroes Generate(){
         int rarity = 1 + (int)(Math.random() * ((5 - 1) + 1));
@@ -118,8 +126,8 @@ public class WaterHeroes extends Heroes{
                 skill = "Отсутствует";
                 break;
         }
-
-        return new WaterHeroes(rarity, damageAmpl, heal, name, element, skill);
+        int price = 125 + (int)(Math.random() * ((250 - 1) + 125));
+        return new WaterHeroes(rarity, damageAmpl, heal, name, element, skill, price);
     }
 
     @Override

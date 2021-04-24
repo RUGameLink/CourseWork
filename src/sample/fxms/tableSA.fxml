@@ -19,6 +19,7 @@
             <TableColumn fx:id="heal" prefWidth="108.0" text="Исцеление" />
             <TableColumn fx:id="element" prefWidth="76.0" text="Стихия" />
             <TableColumn fx:id="skill" prefWidth="63.0" text="Скилл" />
+            <TableColumn fx:id="cost" prefWidth="63.0" text="Цена" />
          </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -58,6 +59,7 @@
             <TableColumn fx:id="heal1" prefWidth="70.0" text="Исцеление" />
             <TableColumn fx:id="element1" prefWidth="76.0" text="Стихия" />
             <TableColumn fx:id="skill1" prefWidth="63.0" text="Скилл" />
+            <TableColumn fx:id="cost1" prefWidth="63.0" text="Цена" />
          </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

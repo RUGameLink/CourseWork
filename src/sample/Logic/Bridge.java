@@ -95,16 +95,16 @@ public class Bridge {
                         break;
                     }
                 }
-
+                var cost = resultSet.getInt("cost");
                 switch (resultSet.getString("element")){
                     case "Нет":
-                        heroesData.add(new Knights(rarity, damageBust, healing, name, element, skill));
+                        heroesData.add(new Knights(rarity, damageBust, healing, name, element, skill, cost));
                         break;
                     case "Вода":
-                        heroesData.add(new WaterHeroes(rarity, damageBust, healing, name, element, skill));
+                        heroesData.add(new WaterHeroes(rarity, damageBust, healing, name, element, skill, cost));
                         break;
                     case "Огонь": ;
-                        heroesData.add(new FireHeroes(rarity, damageBust, healing, name, element, skill));
+                        heroesData.add(new FireHeroes(rarity, damageBust, healing, name, element, skill, cost));
                         break;
                 }
 
@@ -151,16 +151,16 @@ public class Bridge {
                         break;
                     }
                 }
-
+                int cost = resultSet.getInt("cost");
                 switch (resultSet.getString("element")){
                     case "Нет":
-                        usersItemsData.add(new Knights(rarity, damageBust, healing, name, element, skill));
+                        usersItemsData.add(new Knights(rarity, damageBust, healing, name, element, skill, cost));
                         break;
                     case "Вода":
-                        usersItemsData.add(new WaterHeroes(rarity, damageBust, healing, name, element, skill));
+                        usersItemsData.add(new WaterHeroes(rarity, damageBust, healing, name, element, skill, cost));
                         break;
                     case "Огонь": ;
-                        usersItemsData.add(new FireHeroes(rarity, damageBust, healing, name, element, skill));
+                        usersItemsData.add(new FireHeroes(rarity, damageBust, healing, name, element, skill, cost));
                         break;
                 }
 
@@ -177,7 +177,21 @@ public class Bridge {
     public static void buyItem(Heroes heroes){
         String sql = "insert UserItems values('"+getUserName() +"', '" +heroes.getName()+"', " + heroes.getRarity() + ", "
                 + "'" +heroes.getDam() + "', " + "'" +heroes.getHeal() + "', "
-                + "'" +heroes.getElement() + "', " + "'" +heroes.getSkill() + "'" + ")";
+                + "'" +heroes.getElement() + "', " + "'" +heroes.getSkill() + "', " +heroes.getPrice() + ")";
+        System.out.println("\n"+sql+"\n");
+        try {
+            Statement statement = connection.createStatement();
+            int rows = statement.executeUpdate(sql);
+            if(rows > 0){
+                System.out.println("Rows");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public static void delItem(Heroes heroes){
+        String sql = "DelItem '" + heroes.getName() + "', " + heroes.getRarity() + ", " + heroes.getPrice();
         System.out.println("\n"+sql+"\n");
         try {
             Statement statement = connection.createStatement();
@@ -248,16 +262,16 @@ public class Bridge {
                         break;
                     }
                 }
-
+                var cost = resultSet.getInt("cost");
                 switch (resultSet.getString("element")){
                     case "Нет":
-                        ItemsData.add(new Knights(owner, rarity, damageBust, healing, name, element, skill));
+                        ItemsData.add(new Knights(owner, rarity, damageBust, healing, name, element, skill, cost));
                         break;
                     case "Вода":
-                        ItemsData.add(new WaterHeroes(owner, rarity, damageBust, healing, name, element, skill));
+                        ItemsData.add(new WaterHeroes(owner, rarity, damageBust, healing, name, element, skill, cost));
                         break;
                     case "Огонь": ;
-                        ItemsData.add(new FireHeroes(owner, rarity, damageBust, healing, name, element, skill));
+                        ItemsData.add(new FireHeroes(owner, rarity, damageBust, healing, name, element, skill, cost));
                         break;
                 }
 
@@ -271,7 +285,7 @@ public class Bridge {
     public static void write(Heroes heroes){
         String sql = "insert boxTable values('"+heroes.getName()+"', " + heroes.getRarity() + ", "
                 + "'" +heroes.getDam() + "', " + "'" +heroes.getHeal() + "', "
-                + "'" +heroes.getElement() + "', " + "'" +heroes.getSkill() + "'" + ")";
+                + "'" +heroes.getElement() + "', " + "'" +heroes.getSkill() + "', " +heroes.getPrice() + ")";
         System.out.println(sql);
         try {
             Statement statement = connection.createStatement();
@@ -379,16 +393,16 @@ public class Bridge {
                         break;
                     }
                 }
-
+                var cost = resultSet.getInt("cost");
                 switch (resultSet.getString("element")){
                     case "Нет":
-                        heroesData.add(new Knights(rarity, damageBust, healing, name, element, skill));
+                        heroesData.add(new Knights(rarity, damageBust, healing, name, element, skill, cost));
                         break;
                     case "Вода":
-                        heroesData.add(new WaterHeroes(rarity, damageBust, healing, name, element, skill));
+                        heroesData.add(new WaterHeroes(rarity, damageBust, healing, name, element, skill, cost));
                         break;
                     case "Огонь": ;
-                        heroesData.add(new FireHeroes(rarity, damageBust, healing, name, element, skill));
+                        heroesData.add(new FireHeroes(rarity, damageBust, healing, name, element, skill, cost));
                         break;
                 }
             }

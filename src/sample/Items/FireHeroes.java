@@ -4,17 +4,18 @@ package sample.Items;
 import java.util.Random;
 
 public class FireHeroes extends Heroes{
-    public FireHeroes(int rarity, damageAmplification damAmpl, healing heal, Names name, String element, String skill){
+    public FireHeroes(int rarity, damageAmplification damAmpl, healing heal, Names name, String element, String skill, int price){
         this.rarity = rarity;
         this.damAmpl = damAmpl;
         this.heal = heal;
         this.name = name;
         this.element = element;
         this.skill = skill;
+        this.price = price;
 
     }
 
-    public FireHeroes(String owner, int rarity, damageAmplification damAmpl, healing heal, Names name, String element, String skill){
+    public FireHeroes(String owner, int rarity, damageAmplification damAmpl, healing heal, Names name, String element, String skill, int price){
         this.rarity = rarity;
         this.damAmpl = damAmpl;
         this.heal = heal;
@@ -22,6 +23,7 @@ public class FireHeroes extends Heroes{
         this.element = element;
         this.skill = skill;
         this.owner = owner;
+        this.price = price;
     }
 
     @Override
@@ -58,6 +60,12 @@ public class FireHeroes extends Heroes{
     public String getElement(){
         return this.element;
     }
+
+    @Override
+    public int getPrice(){return this.price;}
+
+    @Override
+    public void setPrice(int price){this.price = price;}
 
     public static FireHeroes Generate(){
         int rarity = 1 + (int)(Math.random() * ((5 - 1) + 1));
@@ -127,7 +135,9 @@ public class FireHeroes extends Heroes{
         }
         String element = "Огонь";
 
-        return new FireHeroes(rarity, damageAmpl, heal, name, element, skill);
+        int price = 125 + (int)(Math.random() * ((250 - 1) + 125));
+
+        return new FireHeroes(rarity, damageAmpl, heal, name, element, skill, price);
     }
 
     @Override

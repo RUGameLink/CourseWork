@@ -61,7 +61,7 @@ public class Controller implements Initializable {
     private Label moneyCountIn;
 
     private static int moneyCount;
-    private int boxPrice = 500;
+    private int boxPrice = 3;
     Clicker clicker;
     ClickerController clickerController;
 

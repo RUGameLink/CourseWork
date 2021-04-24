@@ -65,6 +65,8 @@ public class ClickerController implements Initializable {
     private int oreCHeck;
     private int temp;
     private int progress;
+    private Tooltip tooltip = new Tooltip();
+    private Tooltip tooltip2 = new Tooltip();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -134,29 +136,41 @@ public class ClickerController implements Initializable {
 
         upBtn.setOnAction(actionEvent -> {
             if(clicker.actBuster() == true){
-                write();
                 upBtn.setText("Заточить кирку (" + clicker.getBustNumber() + ")");
                 infoLabel.setText("Количество монет: " + clicker.getClickerCount());
-
+                write();
+                getInfo();
             }
         });
 
-        Tooltip tooltip = new Tooltip();
-
+        upgBtn.setOnAction(actionEvent -> {
+            if(clicker.passBuster() == true){
+                upgBtn.setText("Улучшить кирку (" + clicker.getPassivBustNumber() + ")");
+                infoLabel.setText("Количество монет: " + clicker.getClickerCount());
+                write();
+                getInfo2();
+            }
+        });
         tooltip.setText("Сила усиления: " + clicker.getBustEffect() +
                 "\n" + "Стоимость усиления: " + clicker.getBustPrice() +
                 "\n" + "Усилений куплено: " + clicker.getBustNumber());
         upBtn.setTooltip(tooltip);
 
-        upgBtn.setOnAction(actionEvent -> {
-            if(clicker.passBuster() == true){
-                write();
-                upgBtn.setText("Улучшить кирку (" + clicker.getPassivBustNumber() + ")");
-                infoLabel.setText("Количество монет: " + clicker.getClickerCount());
-            }
-        });
+        tooltip2.setText("Минимальное число получаемых монет: " + clicker.getMin()
+                + "\nМаксимальное число получаемых монет: " + clicker.getMax() + "\nСтоимость усиления: " + clicker.getPassivBustPrice() +
+                "\n" + "Улучшений сделано: " + clicker.getPassivBustNumber());
+        upgBtn.setTooltip(tooltip2);
 
-        Tooltip tooltip2 = new Tooltip();
+    }
+    private void getInfo(){
+        tooltip.setText("Сила усиления: " + clicker.getBustEffect() +
+                "\n" + "Стоимость усиления: " + clicker.getBustPrice() +
+                "\n" + "Усилений куплено: " + clicker.getBustNumber());
+        upBtn.setTooltip(tooltip);
+    }
+
+    private void getInfo2(){
+
         tooltip2.setText("Минимальное число получаемых монет: " + clicker.getMin()
                 + "\nМаксимальное число получаемых монет: " + clicker.getMax() + "\nСтоимость усиления: " + clicker.getPassivBustPrice() +
                 "\n" + "Улучшений сделано: " + clicker.getPassivBustNumber());
@@ -327,5 +341,4 @@ public class ClickerController implements Initializable {
         String[] words = temp.split(" ");
         return words;
     }
-
 }

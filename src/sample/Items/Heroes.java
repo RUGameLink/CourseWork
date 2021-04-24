@@ -12,6 +12,8 @@ public class Heroes {
 
     public String owner;
 
+    public int price;
+
     public enum Names {
 
         ABEL ("Абель"),
@@ -102,6 +104,10 @@ public class Heroes {
 
     public String getOwner(){return this.owner;}
 
+    public int getPrice(){return this.price;}
+
+    public void setPrice(int price){this.price = price;}
+
     @Override
     public String toString() {
 
@@ -111,6 +117,7 @@ public class Heroes {
         str += "\nМоя стихия: " + this.element;
         str += "\nРедкость героя: " + this.rarity;
         str += "\nСпособность героя: " + this.skill;
+        str +="\nСтоимость продажи: " + this.price;
         return str;
     }
 }

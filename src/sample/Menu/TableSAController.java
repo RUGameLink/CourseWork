@@ -82,7 +82,16 @@ public class TableSAController implements Initializable {
     @FXML
     private TableColumn<Heroes, String> skill1;
 
+    @FXML
+    private TableColumn<Heroes, Integer> cost;
+
+    @FXML
+    private TableColumn<Heroes, Integer> cost1;
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        heroesData.clear();
+        usersData.clear();
+        usetItemsData.clear();
         heroesData = Bridge.getHeroesDataList();
         usersData = Bridge.getUsersDataList();
         usetItemsData = Bridge.getUsersInvDataList();
@@ -95,6 +104,7 @@ public class TableSAController implements Initializable {
         heal.setCellValueFactory(new PropertyValueFactory<Heroes, Heroes.healing>("heal"));
         element.setCellValueFactory(new PropertyValueFactory<Heroes, String>("element"));
         skill.setCellValueFactory(new PropertyValueFactory<Heroes, String>("skill"));
+        cost.setCellValueFactory(new PropertyValueFactory<Heroes, Integer>("price"));
         table.setItems(heroesData);
 
         login.setCellValueFactory(new PropertyValueFactory<Users, String>("login"));
@@ -108,6 +118,7 @@ public class TableSAController implements Initializable {
         heal1.setCellValueFactory(new PropertyValueFactory<Heroes, Heroes.healing>("heal"));
         element1.setCellValueFactory(new PropertyValueFactory<Heroes, String>("element"));
         skill1.setCellValueFactory(new PropertyValueFactory<Heroes, String>("skill"));
+        cost1.setCellValueFactory(new PropertyValueFactory<Heroes, Integer>("price"));
         inv.setItems(usetItemsData);
 
         refBtn.setOnAction((event -> {
