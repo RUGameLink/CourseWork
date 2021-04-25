@@ -11,7 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import sample.Logic.Bridge;
+import sample.Logic.DBConnector;
 
 import java.io.IOException;
 import java.net.URL;
@@ -40,7 +40,7 @@ public class LoginController implements Initializable {
 
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Bridge.Connector();
+        DBConnector.Connector();
         loginBtn.setOnAction(event -> {
 
             int res;
@@ -128,14 +128,14 @@ public class LoginController implements Initializable {
         if(login.length() != 0 && password.length() != 0 ){
             String sql = "getUser '" + login +"', '" + password + "'";
         //    System.out.println(sql);
-            temp = Bridge.checkUsers(sql);
+            temp = DBConnector.checkUsers(sql);
 
             try {
                 if(temp[0].equals("sa")  && temp[1].equals("123")){
                     res = 2;
                 }
                 else {
-                    Bridge.setUserName(login);
+                    DBConnector.setUserName(login);
                     res = 1;
                 }
             }

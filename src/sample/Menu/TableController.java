@@ -10,11 +10,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import sample.Logic.Bridge;
-import sample.Items.FireHeroes;
+import sample.Logic.DBConnector;
 import sample.Items.Heroes;
-import sample.Items.Knights;
-import sample.Items.WaterHeroes;
 import sample.Logic.Clicker;
 
 import java.io.IOException;
@@ -87,7 +84,7 @@ public class TableController {
     @FXML
     private void initialize() {
         heroesData.clear();
-        heroesData = Bridge.getItems();
+        heroesData = DBConnector.getItems();
         System.out.println(heroesData);
         salePane.setVisible(false);
 
@@ -161,9 +158,9 @@ public class TableController {
                 clickerController.write();
                 int selectedIdx = itemsList.getSelectionModel().getSelectedIndex();
                 itemsList.getItems().remove(selectedIdx);
-                Bridge.delItem(heroes);
+                DBConnector.delItem(heroes);
                 heroesData.clear();
-                heroesData = Bridge.getItems();
+                heroesData = DBConnector.getItems();
                 table.setItems(heroesData);
             }
             catch (NullPointerException ex){

@@ -6,7 +6,7 @@ import sample.Items.*;
 
 import java.sql.*;
 
-public class Bridge {
+public class DBConnector {
     private static Connection connection;
     private static String userName;
     
@@ -60,7 +60,7 @@ public class Bridge {
 
     public static void read(){
         heroesData = FXCollections.observableArrayList();
-        String sql = "select * from boxTable";
+        String sql = "GetBoxTable";
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
@@ -115,6 +115,7 @@ public class Bridge {
     }
 
     public static void getUserItems(){
+        usersItemsData.clear();
         String sql = "GetUserImems " + "'" + getUserName() + "'";
         System.out.println("\n"+sql+"\n");
         try {
@@ -175,9 +176,9 @@ public class Bridge {
     }
 
     public static void buyItem(Heroes heroes){
-        String sql = "insert UserItems values('"+getUserName() +"', '" +heroes.getName()+"', " + heroes.getRarity() + ", "
+        String sql = "AddUserItems'"+getUserName() +"', '" +heroes.getName()+"', " + heroes.getRarity() + ", "
                 + "'" +heroes.getDam() + "', " + "'" +heroes.getHeal() + "', "
-                + "'" +heroes.getElement() + "', " + "'" +heroes.getSkill() + "', " +heroes.getPrice() + ")";
+                + "'" +heroes.getElement() + "', " + "'" +heroes.getSkill() + "', " +heroes.getPrice();
         System.out.println("\n"+sql+"\n");
         try {
             Statement statement = connection.createStatement();
@@ -205,7 +206,7 @@ public class Bridge {
     }
 
     public static void readUsers(){
-        String sql = "select * from Users";
+        String sql = "GetUsers";
 
         try{
             Statement statement = connection.createStatement();
@@ -226,7 +227,8 @@ public class Bridge {
 
     public static void readInv(){
         heroesData = FXCollections.observableArrayList();
-        String sql = "select * from UserItems";
+        ItemsData.clear();
+        String sql = "GetUserItems";
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
@@ -283,9 +285,9 @@ public class Bridge {
     }
 
     public static void write(Heroes heroes){
-        String sql = "insert boxTable values('"+heroes.getName()+"', " + heroes.getRarity() + ", "
+        String sql = "AddBoxTable'"+heroes.getName()+"', " + heroes.getRarity() + ", "
                 + "'" +heroes.getDam() + "', " + "'" +heroes.getHeal() + "', "
-                + "'" +heroes.getElement() + "', " + "'" +heroes.getSkill() + "', " +heroes.getPrice() + ")";
+                + "'" +heroes.getElement() + "', " + "'" +heroes.getSkill() + "', " +heroes.getPrice();
         System.out.println(sql);
         try {
             Statement statement = connection.createStatement();
@@ -346,7 +348,7 @@ public class Bridge {
     }
 
     public static void cleanerOne(){
-        String sql = "delete top (1) from boxTable";
+        String sql = "DelBoxTable";
         Statement statement = null;
         try {
             statement = connection.createStatement();
@@ -354,61 +356,5 @@ public class Bridge {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-    }
-
-    public static ObservableList sort(){
-        heroesData = FXCollections.observableArrayList();
-        String sql = "select * from boxTable\n order by rarity desc";
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
-            while (resultSet.next()){
-                int rarity = resultSet.getInt("rarity");
-                Heroes.Names[] names = Heroes.Names.values();
-                var damageBust = Heroes.damageAmplification.TRUE;
-                var healing = Heroes.healing.TRUE;
-                var element = resultSet.getString("element");
-                var skill = resultSet.getString("skill");
-                var name = Heroes.Names.ABEL;
-
-                for(var title : names){
-                    if (resultSet.getString("name").equals(title.toString())){
-                        name = title;
-                        break;
-                    }
-                }
-
-                Heroes.damageAmplification[] damageBustes = Heroes.damageAmplification.values();
-                for(var title : damageBustes){
-                    if (resultSet.getString("damageBust").equals(title.toString())){
-                        damageBust = title;
-                        break;
-                    }
-                }
-
-                Heroes.healing[] healings = Heroes.healing.values();
-                for(var title : healings){
-                    if (resultSet.getString("healing").equals(title.toString())){
-                        healing = title;
-                        break;
-                    }
-                }
-                var cost = resultSet.getInt("cost");
-                switch (resultSet.getString("element")){
-                    case "Нет":
-                        heroesData.add(new Knights(rarity, damageBust, healing, name, element, skill, cost));
-                        break;
-                    case "Вода":
-                        heroesData.add(new WaterHeroes(rarity, damageBust, healing, name, element, skill, cost));
-                        break;
-                    case "Огонь": ;
-                        heroesData.add(new FireHeroes(rarity, damageBust, healing, name, element, skill, cost));
-                        break;
-                }
-            }
-        } catch (Exception throwables) {
-            throwables.printStackTrace();
-        }
-        return heroesData;
     }
 }

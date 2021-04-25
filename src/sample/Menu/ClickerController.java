@@ -15,7 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import sample.FileStreamer.FileStreamer;
-import sample.Logic.Bridge;
+import sample.Logic.DBConnector;
 import sample.Logic.Clicker;
 
 import java.io.IOException;
@@ -193,7 +193,8 @@ public class ClickerController implements Initializable {
     }
 
     private void changeOre(){
-        oreCHeck = r.nextInt(4 - 1 + 1) + 1;
+        Random r = new Random();
+        oreCHeck = r.nextInt(4) + 1;
         switch(oreCHeck)
         {
             case 1:
@@ -290,7 +291,7 @@ public class ClickerController implements Initializable {
 
 
     public void write(){
-        String fileName = Bridge.getUserName() + ".txt";
+        String fileName = DBConnector.getUserName() + ".txt";
         String myText = clicker.getBustEffect() + " " + clicker.getBustPrice() + " " + clicker.getBustNumber() + " "
                 + clicker.getPassivBustNumber() + " " + clicker.getPassivBustPrice() + " " + clicker.getClickerCount() + " " + clicker.getHpCount() + " " + clicker.getOreCount()
                 + " " + clicker.getMin() + " " + clicker.getMax() + " " + oreCHeck + " " + temp + " " + progress;
@@ -303,7 +304,7 @@ public class ClickerController implements Initializable {
 
     public void read(){
         String res = "";
-        String fileName = Bridge.getUserName() + ".txt";
+        String fileName = DBConnector.getUserName() + ".txt";
         try {
             res = FileStreamer.InputStream(fileName);
         } catch (IOException e) {

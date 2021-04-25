@@ -10,9 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import sample.Logic.Bridge;
+import sample.Logic.DBConnector;
 
-import java.io.Console;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -69,7 +68,7 @@ public class RegistryController implements Initializable {
         String password = passwordText.getText();
         if(login.length() != 0 && password.length() != 0 ){
             String sql = "AddUser '" + login +"', '" + password + "'";
-            int res = Bridge.writeUser(sql);
+            int res = DBConnector.writeUser(sql);
             if(res == 1){
                 infoLabel.setText("");
                 infoLabel.setStyle("-fx-text-fill: green;");

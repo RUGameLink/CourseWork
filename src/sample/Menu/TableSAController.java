@@ -9,7 +9,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import sample.Items.*;
-import sample.Logic.Bridge;
+import sample.Logic.DBConnector;
 
 import java.net.URL;
 
@@ -92,9 +92,9 @@ public class TableSAController implements Initializable {
         heroesData.clear();
         usersData.clear();
         usetItemsData.clear();
-        heroesData = Bridge.getHeroesDataList();
-        usersData = Bridge.getUsersDataList();
-        usetItemsData = Bridge.getUsersInvDataList();
+        heroesData = DBConnector.getHeroesDataList();
+        usersData = DBConnector.getUsersDataList();
+        usetItemsData = DBConnector.getUsersInvDataList();
         System.out.println(heroesData);
 
         ShowInfo();
@@ -143,28 +143,28 @@ public class TableSAController implements Initializable {
     }
 
     private void Ref(){
-        Bridge.cleaner();
+        DBConnector.cleaner();
         for(var i=0;i<15;++i)
         {
             switch(0 + (int)(Math.random() * ((2 - 0) + 1)))
             {
                 case 0:
                     WaterHeroes whero = WaterHeroes.Generate();
-                    Bridge.setHeroesDataList(whero);
+                    DBConnector.setHeroesDataList(whero);
                     break;
                 case 1:
                     FireHeroes fhero = FireHeroes.Generate();
-                    Bridge.setHeroesDataList(fhero);
+                    DBConnector.setHeroesDataList(fhero);
                     break;
                 case 2:
                     Knights khero = Knights.Generate();
-                    Bridge.setHeroesDataList(khero);
+                    DBConnector.setHeroesDataList(khero);
 
                     break;
             }
         }
 
-        heroesData = Bridge.getHeroesDataList();
+        heroesData = DBConnector.getHeroesDataList();
         table.setItems(heroesData);
         ShowInfo();
     }
