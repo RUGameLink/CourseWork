@@ -2,19 +2,19 @@ package sample.Items;
 
 
 public class Heroes {
-    public int rarity;
-    public Names name;
-    public String skill;
+    protected int rarity;
+    protected Names name;
+    protected String skill;
 
-    public damageAmplification damAmpl;
-    public healing heal;
-    public String element;
+    protected damageAmplification damAmpl;
+    protected healing heal;
+    protected String element;
 
-    public String owner;
+    protected String owner;
 
-    public int price;
+    protected int price;
 
-    public enum Names {
+    public enum Names { //Перечисление имен персонажей
 
         ABEL ("Абель"),
         ZELDA ("Зельда"),
@@ -36,7 +36,7 @@ public class Heroes {
     }
 
 
-    public enum damageAmplification {
+    public enum damageAmplification { //Перечисление присутствия показателя получения урона
 
         TRUE ("Есть"),
         FALSE ("Нет");
@@ -57,7 +57,7 @@ public class Heroes {
         }
     }
 
-    public enum healing {
+    public enum healing { //Перечисление присутствия показателя исцеления
 
         TRUE ("Есть"),
         FALSE ("Нет");
@@ -77,6 +77,8 @@ public class Heroes {
             return heal;
         }
     }
+
+    //Геттеры и сеттеры
 
     public int getRarity() {
         return this.rarity;
@@ -109,7 +111,7 @@ public class Heroes {
     public void setPrice(int price){this.price = price;}
 
     @Override
-    public String toString() {
+    public String toString() { //Вывод информации о предметах
 
         var str = "Привет! Мое имя: " + this.name;
         str += "\nПовышенный урон: " + this.damAmpl;

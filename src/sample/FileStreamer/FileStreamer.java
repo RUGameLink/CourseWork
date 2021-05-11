@@ -1,12 +1,10 @@
 package sample.FileStreamer;
 
-import com.sun.webkit.SharedBuffer;
-
 import java.io.*;
 
 public class FileStreamer {
     
-    public static void OutputStream(String greetings, String fileName) throws IOException {
+    public static void OutputStream(String greetings, String fileName) throws IOException { //Метод записи в файл
 
 
         FileOutputStream fileOutputStream = new FileOutputStream(fileName, false);
@@ -17,7 +15,7 @@ public class FileStreamer {
         fileOutputStream.close();
     }
 
-    public static String InputStream(String fileName) throws IOException {
+    public static String InputStream(String fileName) throws IOException { //Метод чтения из файла
 
         FileInputStream fileInputStream = new FileInputStream(fileName);
 

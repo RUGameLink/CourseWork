@@ -4,7 +4,7 @@ package sample.Items;
 import java.util.Random;
 
 public class FireHeroes extends Heroes{
-    public FireHeroes(int rarity, damageAmplification damAmpl, healing heal, Names name, String element, String skill, int price){
+    public FireHeroes(int rarity, damageAmplification damAmpl, healing heal, Names name, String element, String skill, int price){ //Пользовательский конструктор
         this.rarity = rarity;
         this.damAmpl = damAmpl;
         this.heal = heal;
@@ -15,7 +15,7 @@ public class FireHeroes extends Heroes{
 
     }
 
-    public FireHeroes(String owner, int rarity, damageAmplification damAmpl, healing heal, Names name, String element, String skill, int price){
+    public FireHeroes(String owner, int rarity, damageAmplification damAmpl, healing heal, Names name, String element, String skill, int price){ //Альтернативный пользовательский конструктор
         this.rarity = rarity;
         this.damAmpl = damAmpl;
         this.heal = heal;
@@ -25,7 +25,7 @@ public class FireHeroes extends Heroes{
         this.owner = owner;
         this.price = price;
     }
-
+//Геттеры и сеттеры
     @Override
     public int getRarity() {
         return this.rarity;
@@ -67,7 +67,9 @@ public class FireHeroes extends Heroes{
     @Override
     public void setPrice(int price){this.price = price;}
 
-    public static FireHeroes Generate(){
+///////
+
+    public static FireHeroes Generate(){ //Метод генерации предмета
         int rarity = 1 + (int)(Math.random() * ((5 - 1) + 1));
         damageAmplification damageAmpl = damageAmplification.TRUE;
         healing heal = healing.TRUE;
@@ -141,7 +143,7 @@ public class FireHeroes extends Heroes{
     }
 
     @Override
-    public String toString() {
+    public String toString() { //Вывод информации о предметах
         var str = super.toString();
         return str;
     }

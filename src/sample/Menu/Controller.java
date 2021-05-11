@@ -24,7 +24,7 @@ import sample.Items.Heroes;
 public class Controller implements Initializable {
     private ObservableList<Heroes> heroesData = FXCollections.observableArrayList();
 
-    Image image = new Image("/sample/Assets/null.png");
+    private Image image = new Image("/sample/Assets/null.png");
 
     @FXML
     private Button getBtn;
@@ -62,26 +62,26 @@ public class Controller implements Initializable {
 
     private static int moneyCount;
     private int boxPrice = 3;
-    Clicker clicker;
-    ClickerController clickerController;
+    private Clicker clicker;
+    private ClickerController clickerController;
 
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
         clickerController = new ClickerController();
         if (moneyCount == 0){
 
-            clickerController.read();
+            clickerController.read(); //Чтение данных для Кликера из файла пользователя
         }
 
 
         DBConnector.Connector();
 
-        moneyCount = clicker.getClickerCount();
+        moneyCount = clicker.getClickerCount(); //Получение значения количества игровой валюты пользователя
 
 
         moneyCountIn.setText("Количество монет: " + moneyCount);
 
-        getBtn.setOnAction(event -> {
+        getBtn.setOnAction(event -> { //Обработка нажатия кнопки Взять
             try {
                 btnGet();
             } catch (IOException e) {
@@ -89,11 +89,11 @@ public class Controller implements Initializable {
             }
         });
 
-        workWindow.setOnAction(event -> {
+        workWindow.setOnAction(event -> { //Обработка нажатия на кнопку перехода в окно Кликера
             Stage stage = (Stage) workWindow.getScene().getWindow();
             stage.close();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/sample/fxms/clicker.fxml"));
+            loader.setLocation(getClass().getResource("/sample/fxmls/clicker.fxml"));
 
             try {
                 loader.load();
@@ -109,11 +109,11 @@ public class Controller implements Initializable {
             stage.show();
         });
 
-        tableWindow.setOnAction((event -> {
+        tableWindow.setOnAction((event -> { //Обработка нажатия на кнопку перехода в окно пользовательского инвентаря
             Stage stage = (Stage) tableWindow.getScene().getWindow();
             stage.close();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/sample/fxms/table.fxml"));
+            loader.setLocation(getClass().getResource("/sample/fxmls/table.fxml"));
 
             try {
                 loader.load();
@@ -133,13 +133,13 @@ public class Controller implements Initializable {
         getBtn.setText("Взять (" + boxPrice + ")");
     }
 
-    private void btnGet() throws IOException {
+    private void btnGet() throws IOException { //Метод покупки пользователем предмета
 
-        if (moneyCount >= boxPrice) {
+        if (moneyCount >= boxPrice) { //Если у пользователя достаточно валюты, то произойдет списание монет с игрового счета и отображение полученного предмета
 
             this.heroesData = DBConnector.getHeroesDataList();
 
-            if (this.heroesData.size() == 0) {
+            if (this.heroesData.size() == 0) { //Вывод соответствующего уведомления, если магазан пуст
                 textField.setText("Пусто Q_Q");
 
                 image = new Image("/sample/Assets/null.png");
@@ -181,12 +181,9 @@ public class Controller implements Initializable {
         }
     }
 
-    public static int getMoney(){
-        return moneyCount;
-    }
 
-    private void HeroesVis(Heroes hero){
-        switch (hero.rarity){
+    private void HeroesVis(Heroes hero){ //Метод отображения купленного предмета
+        switch (hero.getRarity()){
             case 1:
                 image = new Image("/sample/Assets/rarity/rarity1.png");
                 break;
@@ -205,7 +202,7 @@ public class Controller implements Initializable {
         }
         RarityImage.setImage(image);
 
-        switch (hero.element){
+        switch (hero.getElement()){
             case "Огонь":
                 image = new Image("/sample/Assets/bg/fireBG.png");
                 break;
@@ -217,7 +214,7 @@ public class Controller implements Initializable {
                 break;
         }
 
-        switch (hero.element){
+        switch (hero.getElement()){
             case "Огонь":
                 image = new Image("/sample/Assets/bg/fireBG.png");
                 break;
@@ -230,7 +227,7 @@ public class Controller implements Initializable {
         }
         bgImg.setImage(image);
 
-        switch (hero.heal){
+        switch (hero.getHeal()){
             case TRUE:
                 image = new Image("/sample/Assets/ability/heal.png");
                 break;
@@ -240,7 +237,7 @@ public class Controller implements Initializable {
         }
         healImage.setImage(image);
 
-        switch (hero.damAmpl){
+        switch (hero.getDam()){
             case TRUE:
                 image = new Image("/sample/Assets/ability/damage.png");
                 break;
@@ -250,7 +247,7 @@ public class Controller implements Initializable {
         }
         damageImage.setImage(image);
 
-        switch (hero.name){
+        switch (hero.getName()){
             case ABEL:
                 image = new Image("/sample/Assets/characters/m1.png");
                 break;
@@ -269,7 +266,7 @@ public class Controller implements Initializable {
         }
         characterImage.setImage(image);
 
-        switch (hero.skill){
+        switch (hero.getSkill()){
             case "Огненный шар":
                 image = new Image("/sample/Assets/ability/typeAbility/fire_ball.png");
                 break;

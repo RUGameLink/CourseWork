@@ -3,7 +3,7 @@ package sample.Items;
 import java.util.Random;
 
 public class WaterHeroes extends Heroes{
-    public WaterHeroes(int rarity, damageAmplification damageAmpl, healing heal, Names name, String  element, String skill, int price){
+    public WaterHeroes(int rarity, damageAmplification damageAmpl, healing heal, Names name, String  element, String skill, int price){ //Пользовательский конструктор
         this.rarity = rarity;
         this.damAmpl = damageAmpl;
         this.heal = heal;
@@ -13,7 +13,7 @@ public class WaterHeroes extends Heroes{
         this.price = price;
     }
 
-    public WaterHeroes(String owner, int rarity, damageAmplification damageAmpl, healing heal, Names name, String  element, String skill, int price){
+    public WaterHeroes(String owner, int rarity, damageAmplification damageAmpl, healing heal, Names name, String  element, String skill, int price){ //Альтернативный пользовательский конструктор
         this.rarity = rarity;
         this.damAmpl = damageAmpl;
         this.heal = heal;
@@ -23,7 +23,7 @@ public class WaterHeroes extends Heroes{
         this.owner = owner;
         this.price = price;
     }
-
+    //Геттеры и сеттеры
     public String getOwner(){
         return this.owner;
     }
@@ -65,7 +65,9 @@ public class WaterHeroes extends Heroes{
     @Override
     public void setPrice(int price){this.price = price;}
 
-    public static WaterHeroes Generate(){
+    /////
+
+    public static WaterHeroes Generate(){ //Метод генерации предмета
         int rarity = 1 + (int)(Math.random() * ((5 - 1) + 1));
         damageAmplification damageAmpl = damageAmplification.TRUE;
         healing heal = healing.TRUE;
@@ -131,8 +133,7 @@ public class WaterHeroes extends Heroes{
     }
 
     @Override
-    public String toString() {
-
+    public String toString() { //Вывод информации о предметах
         var str = super.toString();
         return str;
     }

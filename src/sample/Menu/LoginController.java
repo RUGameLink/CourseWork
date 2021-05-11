@@ -23,9 +23,6 @@ public class LoginController implements Initializable {
     private Button loginBtn;
 
     @FXML
-    private Label progLabel;
-
-    @FXML
     private TextField loginText;
 
     @FXML
@@ -40,20 +37,20 @@ public class LoginController implements Initializable {
 
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        DBConnector.Connector();
-        loginBtn.setOnAction(event -> {
+        DBConnector.Connector(); //Вызов статического метода для подключения к БД
+        loginBtn.setOnAction(event -> { //Обработка нажатия кнопки авторизации
 
             int res;
-            res = checkUser();
+            res = checkUser(); //В зависимости от полученного результата приложение перенаправит на соответствующее окно
             switch (res){
-                case 1:
+                case 1: //Перенаправление пользователя в главное меню
                     loginText.setText("");
                     passwordText.setText("");
 
                     Stage stage = (Stage) loginBtn.getScene().getWindow();
                     stage.close();
                     FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(getClass().getResource("/sample/fxms/sample.fxml"));
+                    loader.setLocation(getClass().getResource("/sample/fxmls/sample.fxml"));
 
                     try {
                         loader.load();
@@ -68,14 +65,14 @@ public class LoginController implements Initializable {
                     stage.setResizable(false);
                     stage.show();
                     break;
-                case 2:
+                case 2: //Перенаправление Системного администратора в рабочее окно
                     loginText.setText("");
                     passwordText.setText("");
 
                     stage = (Stage) loginBtn.getScene().getWindow();
                     stage.close();
                     loader = new FXMLLoader();
-                    loader.setLocation(getClass().getResource("/sample/fxms/tableSA.fxml"));
+                    loader.setLocation(getClass().getResource("/sample/fxmls/tableSA.fxml"));
 
                     try {
                         loader.load();
@@ -90,7 +87,7 @@ public class LoginController implements Initializable {
                     stage.setResizable(false);
                     stage.show();
                     break;
-                case -1:
+                case -1: //Вывод соответствующей информации в случае отсутствия пользователя в базе
                     infoLabel.setText("");
                     infoLabel.setStyle("-fx-text-fill: red;");
                     infoLabel.setText("Неверно введено имя пользователя\nи/или пароль");
@@ -98,11 +95,11 @@ public class LoginController implements Initializable {
 
             }
         });
-        regBtn.setOnAction(event -> {
+        regBtn.setOnAction(event -> { //Обработка нажатия кнопки регистрации (открытие меню регистрации)
             Stage stage = (Stage) regBtn.getScene().getWindow();
             stage.close();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/sample/fxms/reg.fxml"));
+            loader.setLocation(getClass().getResource("/sample/fxmls/reg.fxml"));
 
             try {
                 loader.load();
@@ -120,7 +117,7 @@ public class LoginController implements Initializable {
 
     }
 
-    private int checkUser(){
+    private int checkUser(){ //Метод формирования запроса на авторизацию в приложение
         int res = 0;
         String[] temp = new String[2];
         String login = loginText.getText();
@@ -128,7 +125,7 @@ public class LoginController implements Initializable {
         if(login.length() != 0 && password.length() != 0 ){
             String sql = "getUser '" + login +"', '" + password + "'";
         //    System.out.println(sql);
-            temp = DBConnector.checkUsers(sql);
+            temp = DBConnector.checkUsers(sql); //Отправка сформированного запроса в статический метод для проверки существования пользователя
 
             try {
                 if(temp[0].equals("sa")  && temp[1].equals("123")){

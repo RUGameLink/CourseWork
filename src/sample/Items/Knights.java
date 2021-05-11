@@ -3,7 +3,7 @@ package sample.Items;
 import java.util.Random;
 
 public class Knights extends Heroes{
-    public Knights(int rarity, damageAmplification damageAmpl, healing heal, Names name, String element, String skill, int price){
+    public Knights(int rarity, damageAmplification damageAmpl, healing heal, Names name, String element, String skill, int price){ //Пользовательский конструктор
         this.rarity = rarity;
         this.damAmpl = damageAmpl;
         this.heal = heal;
@@ -13,7 +13,7 @@ public class Knights extends Heroes{
         this.price = price;
     }
 
-    public Knights(String owner, int rarity, damageAmplification damageAmpl, healing heal, Names name, String element, String skill, int price){
+    public Knights(String owner, int rarity, damageAmplification damageAmpl, healing heal, Names name, String element, String skill, int price){ //Альтернативный пользовательский конструктор
         this.rarity = rarity;
         this.damAmpl = damageAmpl;
         this.heal = heal;
@@ -23,7 +23,7 @@ public class Knights extends Heroes{
         this.owner = owner;
         this.price = price;
     }
-
+    //Геттеры и сеттеры
     @Override
     public int getRarity() {
         return this.rarity;
@@ -60,7 +60,13 @@ public class Knights extends Heroes{
     @Override
     public void setPrice(int price){this.price = price;}
 
-    public static Knights Generate(){
+    public String getOwner(){
+        return this.owner;
+    }
+
+    ///////
+
+    public static Knights Generate(){ //Метод генерации предмета
         int rarity = 1 + (int)(Math.random() * ((5 - 1) + 1));
         damageAmplification damageAmpl = damageAmplification.TRUE;
         healing heal = healing.TRUE;
@@ -126,12 +132,8 @@ public class Knights extends Heroes{
         return new Knights(rarity, damageAmpl, heal, name, element, skill, price);
     }
 
-    public String getOwner(){
-        return this.owner;
-    }
-
     @Override
-    public String toString() {
+    public String toString() { //Вывод информации о предметах
         var str = super.toString();
         return str;
     }

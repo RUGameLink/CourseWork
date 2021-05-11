@@ -55,8 +55,6 @@ public class TableSAController implements Initializable {
     @FXML
     private Button refBtn;
 
-    @FXML
-    private Label infoLabel;
 
     @FXML
     private TableView<Heroes> inv;
@@ -105,11 +103,11 @@ public class TableSAController implements Initializable {
         element.setCellValueFactory(new PropertyValueFactory<Heroes, String>("element"));
         skill.setCellValueFactory(new PropertyValueFactory<Heroes, String>("skill"));
         cost.setCellValueFactory(new PropertyValueFactory<Heroes, Integer>("price"));
-        table.setItems(heroesData);
+        table.setItems(heroesData); //Заполнение таблицы магазина из базы данных
 
         login.setCellValueFactory(new PropertyValueFactory<Users, String>("login"));
         password.setCellValueFactory(new PropertyValueFactory<Users, String>("password"));
-        usersTable.setItems(usersData);
+        usersTable.setItems(usersData); //Заполнение таблицы пользователей из базы данных
 
         owner.setCellValueFactory(new PropertyValueFactory<Heroes, String>("owner"));
         name1.setCellValueFactory(new PropertyValueFactory<Heroes, Heroes.Names>("name"));
@@ -119,14 +117,14 @@ public class TableSAController implements Initializable {
         element1.setCellValueFactory(new PropertyValueFactory<Heroes, String>("element"));
         skill1.setCellValueFactory(new PropertyValueFactory<Heroes, String>("skill"));
         cost1.setCellValueFactory(new PropertyValueFactory<Heroes, Integer>("price"));
-        inv.setItems(usetItemsData);
+        inv.setItems(usetItemsData); //Заполнение таблицы пользовательских инвентарей из базы данных
 
         refBtn.setOnAction((event -> {
             Ref();
         }));
     }
 
-    private void ShowInfo() {
+    private void ShowInfo() { // Вывод информации о наличии предметов того или иного вида
         int FireHeroesCount = 0;
         int WaterHeroesCount = 0;
         int KnightsCount = 0;
@@ -142,7 +140,7 @@ public class TableSAController implements Initializable {
         }
     }
 
-    private void Ref(){
+    private void Ref(){ //Перезаполнение магазина предметами
         DBConnector.cleaner();
         for(var i=0;i<15;++i)
         {
@@ -165,7 +163,7 @@ public class TableSAController implements Initializable {
         }
 
         heroesData = DBConnector.getHeroesDataList();
-        table.setItems(heroesData);
+        table.setItems(heroesData); //Запись сгенерированных предметов в базу данных
         ShowInfo();
     }
 }

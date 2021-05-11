@@ -14,6 +14,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+
 import sample.FileStreamer.FileStreamer;
 import sample.Logic.DBConnector;
 import sample.Logic.Clicker;
@@ -22,7 +23,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
-
 
 
 public class ClickerController implements Initializable {
@@ -56,9 +56,9 @@ public class ClickerController implements Initializable {
     private Button oreBtn;
 
 
-    Clicker clicker;
+    private Clicker clicker;
 
-    Image image = new Image("/sample/Assets/null.png");
+    private Image image = new Image("/sample/Assets/ore/ore1.png");
 
     private Random r = new Random();
 
@@ -85,11 +85,11 @@ public class ClickerController implements Initializable {
         totalOre.setText("Разбито руды: " +  clicker.getOreCount());
         progLabel.setText("Залежа добыта на:  " + temp + "%");
 
-        tableWindow.setOnAction((event -> {
+        tableWindow.setOnAction((event -> { // Обработчик нажатия кнопки перехода в окно инвентаря
             Stage stage = (Stage) tableWindow.getScene().getWindow();
             stage.close();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/sample/fxms/sample.fxml"));
+            loader.setLocation(getClass().getResource("/sample/fxmls/sample.fxml"));
 
             try {
                 loader.load();
@@ -106,11 +106,11 @@ public class ClickerController implements Initializable {
 
         }));
 
-        shopWindow.setOnAction((event -> {
+        shopWindow.setOnAction((event -> { //Обработчик нажатия кнопки перехода в окно магазина
             Stage stage = (Stage) tableWindow.getScene().getWindow();
             stage.close();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource( "/sample/fxms/table.fxml"));
+            loader.setLocation(getClass().getResource("/sample/fxmls/table.fxml"));
 
             try {
                 loader.load();
@@ -127,14 +127,14 @@ public class ClickerController implements Initializable {
 
         }));
 
-        oreBtn.setOnAction(actionEvent -> {
+        oreBtn.setOnAction(actionEvent -> { //Обработчик нажатия на кнопку Кликера
             clickOre();
             write();
             temp =  (100 * progress) / (int) clicker.getHpCount();
             progLabel.setText("Залежа добыта на:  " + temp + "%");
         });
 
-        upBtn.setOnAction(actionEvent -> {
+        upBtn.setOnAction(actionEvent -> { //Обработчик нажатия на кнопку покупки улучшения
             if(clicker.actBuster() == true){
                 upBtn.setText("Заточить кирку (" + clicker.getBustNumber() + ")");
                 infoLabel.setText("Количество монет: " + clicker.getClickerCount());
@@ -143,7 +143,7 @@ public class ClickerController implements Initializable {
             }
         });
 
-        upgBtn.setOnAction(actionEvent -> {
+        upgBtn.setOnAction(actionEvent -> { //Обработчик нажатия на кнопку покупки альтернативного улучшения
             if(clicker.passBuster() == true){
                 upgBtn.setText("Улучшить кирку (" + clicker.getPassivBustNumber() + ")");
                 infoLabel.setText("Количество монет: " + clicker.getClickerCount());
@@ -154,30 +154,30 @@ public class ClickerController implements Initializable {
         tooltip.setText("Сила усиления: " + clicker.getBustEffect() +
                 "\n" + "Стоимость усиления: " + clicker.getBustPrice() +
                 "\n" + "Усилений куплено: " + clicker.getBustNumber());
-        upBtn.setTooltip(tooltip);
+        upBtn.setTooltip(tooltip);//Вывод информации при наведвении курсора на кнопку улучшения
 
         tooltip2.setText("Минимальное число получаемых монет: " + clicker.getMin()
                 + "\nМаксимальное число получаемых монет: " + clicker.getMax() + "\nСтоимость усиления: " + clicker.getPassivBustPrice() +
                 "\n" + "Улучшений сделано: " + clicker.getPassivBustNumber());
-        upgBtn.setTooltip(tooltip2);
+        upgBtn.setTooltip(tooltip2);//Вывод информации при наведвении курсора на кнопку улучшения
 
     }
-    private void getInfo(){
+    private void getInfo(){ //Дополнительный вариант вывода обновленной информации
         tooltip.setText("Сила усиления: " + clicker.getBustEffect() +
                 "\n" + "Стоимость усиления: " + clicker.getBustPrice() +
                 "\n" + "Усилений куплено: " + clicker.getBustNumber());
-        upBtn.setTooltip(tooltip);
+        upBtn.setTooltip(tooltip);//Вывод информации при наведвении курсора на кнопку альтернативного улучшения
     }
 
-    private void getInfo2(){
+    private void getInfo2(){ //Дополнительный вариант вывода обновленной информации
 
         tooltip2.setText("Минимальное число получаемых монет: " + clicker.getMin()
                 + "\nМаксимальное число получаемых монет: " + clicker.getMax() + "\nСтоимость усиления: " + clicker.getPassivBustPrice() +
                 "\n" + "Улучшений сделано: " + clicker.getPassivBustNumber());
-        upgBtn.setTooltip(tooltip2);
+        upgBtn.setTooltip(tooltip2);//Вывод информации при наведвении курсора на кнопку улучшения
     }
 
-    private void clickOre(){
+    private void clickOre(){//Метод изменения показателей при нажатии на кнопку руды
         progress = progress + 1 + clicker.getBustEffect();
         if(progress >= clicker.getHpCount()){
             scale();
@@ -192,7 +192,7 @@ public class ClickerController implements Initializable {
         }
     }
 
-    private void changeOre(){
+    private void changeOre(){ //Изменение изображения на кнопке руды
         Random r = new Random();
         oreCHeck = r.nextInt(4) + 1;
         switch(oreCHeck)
@@ -214,7 +214,7 @@ public class ClickerController implements Initializable {
         write();
     }
 
-    private void readOre(){
+    private void readOre(){//Установка изображения на кнопку руды при старте окна
         switch(oreCHeck)
         {
             case 1:
@@ -233,7 +233,7 @@ public class ClickerController implements Initializable {
         stone.setImage(image);
     }
 
-    private void scale(){
+    private void scale(){//Увеличение показателя прочности руды
         int temp;
         if (clicker.getBustEffect() > 20000){
             temp = (int) clicker.getHpCount() + 50000;
@@ -290,7 +290,7 @@ public class ClickerController implements Initializable {
     }
 
 
-    public void write(){
+    public void write(){//Запись показателей Кликера в пользовательский файл
         String fileName = DBConnector.getUserName() + ".txt";
         String myText = clicker.getBustEffect() + " " + clicker.getBustPrice() + " " + clicker.getBustNumber() + " "
                 + clicker.getPassivBustNumber() + " " + clicker.getPassivBustPrice() + " " + clicker.getClickerCount() + " " + clicker.getHpCount() + " " + clicker.getOreCount()
@@ -302,7 +302,7 @@ public class ClickerController implements Initializable {
         }
     }
 
-    public void read(){
+    public void read(){//Чтение показателей Кликера из пользовательского файла
         String res = "";
         String fileName = DBConnector.getUserName() + ".txt";
         try {
@@ -337,7 +337,7 @@ public class ClickerController implements Initializable {
             progress = Integer.parseInt(word[12]);
         }
     }
-    private static String[] split(String temp){
+    private static String[] split(String temp){ //Метод разделения полученной информации из файла на массив значений
 
         String[] words = temp.split(" ");
         return words;

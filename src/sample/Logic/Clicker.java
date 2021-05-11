@@ -19,7 +19,7 @@ public class Clicker {
     private static int clickerCount;
 
     private static double hpCount;
-
+    //Пользовательский конструктор для задания "нулевого" состояния игры
     public Clicker(int busteffect, int bustprice, int bustnumber, int passivbustNumber, int passivbustPrice, int count, double hpcount, int murCount, int Min, int Max){
         bustPrice = bustprice;
         bustEffect = busteffect;
@@ -36,7 +36,7 @@ public class Clicker {
         max = Max;
     }
 
-    public static boolean actBuster(){
+    public static boolean actBuster(){ // Активное усиление, влияющее на скорость "добычи" руды
         if (clickerCount >= bustPrice) {
             clickerCount = clickerCount - bustPrice;
             bustPrice += bustPrice * 0.3;
@@ -54,7 +54,7 @@ public class Clicker {
         }
     }
 
-    public static boolean passBuster(){
+    public static boolean passBuster(){ // Пассивное училение, влияющее на значение получаемой валюты за уничтожение руды
         if (clickerCount >= passivBustPrice) {
             clickerCount = clickerCount - passivBustPrice;
             passivBustPrice += passivBustPrice * 0.5;
@@ -67,7 +67,7 @@ public class Clicker {
             return false;
         }
     }
-
+    //Геттеры и Сеттеры
     public static int getBustEffect(){
         return bustEffect;
     }
@@ -124,7 +124,7 @@ public class Clicker {
 
     public static void setMin(int Min){min = Min;}
 
-    public static int getPower(){
+    public static int getPower(){ //Получение игровой валюты в регулируемых пределах
         int temp = clickerCount +  r.nextInt(max - min + 1) + min;
         return temp;
     }

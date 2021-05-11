@@ -49,7 +49,7 @@
             <Font name="Georgia" size="12.0" />
          </font>
       </Label>
-      <Button fx:id="regBtn" layoutX="133.0" layoutY="311.0" mnemonicParsing="false" prefHeight="12.0" prefWidth="279.0" style="-fx-background-color: #2F2B43;" text="Нет аккаунта? Зарегестрироваться" textFill="#74e3ff">
+      <Button fx:id="regBtn" layoutX="133.0" layoutY="311.0" mnemonicParsing="false" prefHeight="12.0" prefWidth="279.0" style="-fx-background-color: #2F2B43;" text="Нет аккаунта? Зарегистрироваться" textFill="#74e3ff">
          <font>
             <Font name="Gabriola" size="20.0" />
          </font>

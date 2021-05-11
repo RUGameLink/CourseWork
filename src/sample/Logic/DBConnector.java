@@ -9,6 +9,14 @@ import java.sql.*;
 public class DBConnector {
     private static Connection connection;
     private static String userName;
+
+    private static ObservableList<Heroes> heroesData = FXCollections.observableArrayList();
+
+    private static ObservableList<Users> usersData = FXCollections.observableArrayList();
+
+    private static ObservableList<Heroes> usersItemsData = FXCollections.observableArrayList();
+
+    private static ObservableList<Heroes> ItemsData = FXCollections.observableArrayList();
     
     public static void Connector(){
         String url = "jdbc:sqlserver://RUGAMELINK\\SQLEXPRESS;databaseName=items";
@@ -21,7 +29,7 @@ public class DBConnector {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-    }
+    } // Конструктор по умолчанию
 
     public static String getUserName(){
         return userName;
@@ -31,34 +39,26 @@ public class DBConnector {
         userName = username;
     }
 
-    private static ObservableList<Heroes> heroesData = FXCollections.observableArrayList();
-
-    private static ObservableList<Users> usersData = FXCollections.observableArrayList();
-
-    private static ObservableList<Heroes> usersItemsData = FXCollections.observableArrayList();
-
-    private static ObservableList<Heroes> ItemsData = FXCollections.observableArrayList();
-
-    public static void setHeroesDataList(Heroes heroes){
+    public static void setHeroesDataList(Heroes heroes){ // Метод записи объекта Heroes в базу данных
         write(heroes);
     }
 
-    public static ObservableList getHeroesDataList(){
+    public static ObservableList getHeroesDataList(){ // Метод вызова метода чтения из базы данных и возврат списка объектов Heroes
         read();
         return heroesData;
     }
 
-    public static ObservableList getUsersDataList(){
+    public static ObservableList getUsersDataList(){ // Метод вызова метода чтения из базы данных и возврат списка объектов Users
         readUsers();
         return usersData;
     }
 
-    public static ObservableList getUsersInvDataList(){
+    public static ObservableList getUsersInvDataList(){ // Метод вызова метода чтения из базы данных и возврат списка объектов Heroes
         readInv();
         return ItemsData;
     }
 
-    public static void read(){
+    public static void read(){ // Метод чтения данных из базы данных
         heroesData = FXCollections.observableArrayList();
         String sql = "GetBoxTable";
         try {
@@ -114,7 +114,7 @@ public class DBConnector {
         }
     }
 
-    public static void getUserItems(){
+    public static void getUserItems(){ // Метод чтения данных пользовательского инвентаря из базы данных и возврат
         usersItemsData.clear();
         String sql = "GetUserImems " + "'" + getUserName() + "'";
         System.out.println("\n"+sql+"\n");
@@ -170,12 +170,13 @@ public class DBConnector {
             throwables.printStackTrace();
         }
     }
+
     public static ObservableList getItems(){
         getUserItems();
         return usersItemsData;
     }
 
-    public static void buyItem(Heroes heroes){
+    public static void buyItem(Heroes heroes){ // Метод покупки пользователем предмета
         String sql = "AddUserItems'"+getUserName() +"', '" +heroes.getName()+"', " + heroes.getRarity() + ", "
                 + "'" +heroes.getDam() + "', " + "'" +heroes.getHeal() + "', "
                 + "'" +heroes.getElement() + "', " + "'" +heroes.getSkill() + "', " +heroes.getPrice();
@@ -191,7 +192,7 @@ public class DBConnector {
         }
     }
 
-    public static void delItem(Heroes heroes){
+    public static void delItem(Heroes heroes){ // Метод удаления купленного предмета из магазина
         String sql = "DelItem '" + heroes.getName() + "', " + heroes.getRarity() + ", " + heroes.getPrice();
         System.out.println("\n"+sql+"\n");
         try {
@@ -205,7 +206,7 @@ public class DBConnector {
         }
     }
 
-    public static void readUsers(){
+    public static void readUsers(){ // Метод удаления купленного предмета из магазина
         String sql = "GetUsers";
 
         try{
@@ -225,7 +226,7 @@ public class DBConnector {
     }
 
 
-    public static void readInv(){
+    public static void readInv(){ // Метод чтения из базы данных инвентарей пользователей
         heroesData = FXCollections.observableArrayList();
         ItemsData.clear();
         String sql = "GetUserItems";
@@ -284,7 +285,7 @@ public class DBConnector {
 
     }
 
-    public static void write(Heroes heroes){
+    public static void write(Heroes heroes){ // Метод записи объектов Heroes в хранилище магазина
         String sql = "AddBoxTable'"+heroes.getName()+"', " + heroes.getRarity() + ", "
                 + "'" +heroes.getDam() + "', " + "'" +heroes.getHeal() + "', "
                 + "'" +heroes.getElement() + "', " + "'" +heroes.getSkill() + "', " +heroes.getPrice();
@@ -300,7 +301,7 @@ public class DBConnector {
         }
     }
 
-    public static int writeUser(String sql){
+    public static int writeUser(String sql){ // Запись нового пользователя в базу данных
         System.out.println(sql);
         int rows = 0;
 
@@ -316,7 +317,7 @@ public class DBConnector {
         return rows;
     }
 
-    public static String[] checkUsers(String sql){
+    public static String[] checkUsers(String sql){ // Метод проверки пользователя в базе данных
         System.out.println(sql);
         String[] res = new String[2];
         try {
@@ -336,7 +337,7 @@ public class DBConnector {
 
     }
 
-    public static void cleaner(){
+    public static void cleaner(){ // Метод очистки хранилища магазина в базе данных
         String sql = "DELETE boxTable";
         Statement statement = null;
         try {
@@ -347,7 +348,7 @@ public class DBConnector {
         }
     }
 
-    public static void cleanerOne(){
+    public static void cleanerOne(){ // Метод удаления записи из таблицы хранилища магазина в базе данных
         String sql = "DelBoxTable";
         Statement statement = null;
         try {

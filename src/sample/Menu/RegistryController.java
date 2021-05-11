@@ -24,8 +24,6 @@ public class RegistryController implements Initializable {
     @FXML
     private Button regBtn;
 
-    @FXML
-    private Label progLabel;
 
     @FXML
     private TextField loginText;
@@ -38,11 +36,11 @@ public class RegistryController implements Initializable {
 
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        retBtn.setOnAction(event -> {
+        retBtn.setOnAction(event -> { //Возврат в меню авторизации
             Stage stage = (Stage) retBtn.getScene().getWindow();
             stage.close();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/sample/fxms/login.fxml"));
+            loader.setLocation(getClass().getResource("/sample/fxmls/login.fxml"));
 
             try {
                 loader.load();
@@ -58,12 +56,12 @@ public class RegistryController implements Initializable {
             stage.show();
         });
 
-        regBtn.setOnAction(event -> {
+        regBtn.setOnAction(event -> { //Обработка нажатия на клавишу регистрации
             addUser();
         });
     }
 
-    private void addUser(){
+    private void addUser(){ //Метод формирования запроса для добавления нового пользователя в базу данных
         String login = loginText.getText();
         String password = passwordText.getText();
         if(login.length() != 0 && password.length() != 0 ){

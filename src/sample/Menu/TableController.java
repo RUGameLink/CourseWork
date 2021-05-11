@@ -32,8 +32,6 @@ public class TableController {
     @FXML
     private Button retBtn;
 
-    @FXML
-    private Label infoLabel;
 
     @FXML
     private TableView<Heroes> table;
@@ -43,9 +41,6 @@ public class TableController {
 
     @FXML
     private TableColumn<Heroes, Integer> rarity;
-
-    @FXML
-    private TableColumn<?, ?> res;
 
     @FXML
     private TableColumn<Heroes, Heroes.damageAmplification> dam;
@@ -84,7 +79,7 @@ public class TableController {
     @FXML
     private void initialize() {
         heroesData.clear();
-        heroesData = DBConnector.getItems();
+        heroesData = DBConnector.getItems(); //Получение значений пользовательского инвентаря
         System.out.println(heroesData);
         salePane.setVisible(false);
 
@@ -97,13 +92,13 @@ public class TableController {
         cost.setCellValueFactory(new PropertyValueFactory<Heroes, Integer>("price"));
         table.setItems(heroesData);
 
-        itemsList.setItems(heroesData);
+        itemsList.setItems(heroesData); //Заполнение таблицы из базы данных
 
-        workWindow.setOnAction(event -> {
+        workWindow.setOnAction(event -> { //Обработка нажатия на кнопку перехода в окно Кликера
             Stage stage = (Stage) workWindow.getScene().getWindow();
             stage.close();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/sample/fxms/clicker.fxml"));
+            loader.setLocation(getClass().getResource("/sample/fxmls/clicker.fxml"));
 
             try {
                 loader.load();
@@ -119,12 +114,12 @@ public class TableController {
             stage.show();
         });
 
-        retBtn.setOnAction((event -> {
+        retBtn.setOnAction((event -> { //Обработчик нажатия кнопки перехода в окно магазина
             Stage stage = (Stage) retBtn.getScene().getWindow();
             stage.close();
 
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/sample/fxms/sample.fxml"));
+            loader.setLocation(getClass().getResource("/sample/fxmls/sample.fxml"));
 
             try {
                 loader.load();
@@ -140,22 +135,22 @@ public class TableController {
             stage.show();
         }));
 
-        saleItem.setOnAction(actionEvent -> {
+        saleItem.setOnAction(actionEvent -> { //Отображение панели продажи предметов
             salePane.setVisible(true);
         });
 
-        closeBtn.setOnAction(actionEvent -> {
+        closeBtn.setOnAction(actionEvent -> {//Скрытие панели продажи предметов
             salePane.setVisible(false);
         });
 
-        saleBtn.setOnAction(actionEvent -> {
+        saleBtn.setOnAction(actionEvent -> { //Обработчик нажатия кнопки продажи предмета
 
             try {
                 Heroes heroes = itemsList.getSelectionModel().getSelectedItem();
                 int cost = heroes.getPrice() + Clicker.getClickerCount();
                 Clicker.setClickerCount(cost);
                 ClickerController clickerController = new ClickerController();
-                clickerController.write();
+                clickerController.write(); //Перезаписть информации о количестве валюты
                 int selectedIdx = itemsList.getSelectionModel().getSelectedIndex();
                 itemsList.getItems().remove(selectedIdx);
                 DBConnector.delItem(heroes);
