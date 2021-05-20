@@ -66,7 +66,6 @@ public class TableController {
     @FXML
     private Button saleItem;
 
-
     @FXML
     private Button workWindow;
 
